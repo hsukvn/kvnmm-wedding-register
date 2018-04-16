@@ -13,7 +13,7 @@ var methodOverride = require('method-override'); // for delete method
 
 var AttendeeScema = new mongoose.Schema({
 	name: { type: String, required: true },
-	relation: { type: Number, min: 1, max: 2, required: true },
+	relation: { type: Number, min: 1, max: 2 },
 	members: [{
 		name: String,
 		vegetarian: Boolean,
@@ -59,14 +59,12 @@ app.post('/api/attendee', function(req, res) {
 	Attendee.create({ // FIXME: better way to give default value?
 		name: req.body.name,
 		relation: req.body.relation,
-		companion: req.body.companion ? req.body.companion : [],
-		number_of_kid_seat: req.body.number_of_kid_seat ? number_of_kid_seat : 0,
-		vegetarian: req.body.vegetarian ? vegetarian : false,
-		invitation: req.body.invitation ? invitation : false,
+		members: req.body.members ? req.body.members : [],
+		attend: req.body.attend ? attend : false,
+		ceremony_attend: req.body.ceremony_attend ? ceremony_attend : false,
 		email: req.body.email ? email : '',
 		phone: req.body.phone ? phone : '',
-		post_code: req.body.post_code ? post_code : '',
-		address: req.body.address ? address : '',
+		address: req.body.address ? address : ''
 	}, function(err, attendee) {
 		if (err) {
 			res.status(500).json(err);

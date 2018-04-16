@@ -25,7 +25,10 @@
     "react": "^0.14.6",
     "react-dom": "^0.14.6",
     "react-tap-event-plugin": "^0.2.2",
-    "style-loader": "^0.13.1"
+    "style-loader": "^0.13.1",
+    "method-override": "^2.3.6",
+    "mongoose": "^4.5.3",
+    "morgan": "^1.7.0"
   },
   "devDependencies": {
     "webpack": "^1.12.9",
