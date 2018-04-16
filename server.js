@@ -60,11 +60,11 @@ app.post('/api/attendee', function(req, res) {
 		name: req.body.name,
 		relation: req.body.relation,
 		members: req.body.members ? req.body.members : [],
-		attend: req.body.attend ? attend : false,
-		ceremony_attend: req.body.ceremony_attend ? ceremony_attend : false,
-		email: req.body.email ? email : '',
-		phone: req.body.phone ? phone : '',
-		address: req.body.address ? address : ''
+		attend: req.body.attend ? req.body.attend : false,
+		ceremony_attend: req.body.ceremony_attend ? req.body.ceremony_attend : false,
+		email: req.body.email ? req.body.email : '',
+		phone: req.body.phone ? req.body.phone : '',
+		address: req.body.address ? req.body.address : ''
 	}, function(err, attendee) {
 		if (err) {
 			res.status(500).json(err);
