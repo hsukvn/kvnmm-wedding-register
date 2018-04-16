@@ -8,7 +8,7 @@ export default class Layout extends React.Component {
 		super();
 		this.state = {
 			name: '',
-			relation: '0',
+			relation: 1,
 			members: [],
 			attend: false,
 			ceremony_attend: false,
