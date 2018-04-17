@@ -10,8 +10,7 @@ export default class Layout extends React.Component {
 			name: '',
 			relation: 1,
 			members: [],
-			attend: false,
-			ceremony_attend: false,
+			attend: 'wedding_and_ceremony',
 			email: '',
 			phone: '',
 			address: '',
@@ -36,7 +35,6 @@ export default class Layout extends React.Component {
 						relation={this.state.relation}
 						members={this.state.members}
 						attend={this.state.attend}
-						ceremony_attend={this.state.ceremony_attend}
 						email={this.state.email}
 						phone={this.state.phone}
 						address={this.state.address}

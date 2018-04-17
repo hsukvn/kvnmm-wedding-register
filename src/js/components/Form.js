@@ -17,6 +17,10 @@ export default class Form extends React.Component {
 		this.props.changeState('relation', value);
 	}
 
+	handleSelectAction(e, index, value) {
+		this.props.changeState('attend', value);
+	}
+
 	handleSubmit(e) {
 		e.preventDefault();
 		// call api
@@ -28,8 +32,8 @@ export default class Form extends React.Component {
 				name: this.props.name,
 				relation: this.props.relation,
 				members: this.props.members,
-				attend: (this.props.attend === 'coming'),
-				ceremony_attend: this.props.ceremony_attend,
+				attend: (this.props.attend === 'wedding_and_ceremony' || this.props.attend === 'wedding_only') ,
+				ceremony_attend: (this.props.attend === 'wedding_and_ceremony'),
 				email: this.props.email,
 				phone: this.props.phone,
 				address: this.props.address,
@@ -54,16 +58,15 @@ export default class Form extends React.Component {
 						onChange={this.handleChange.bind(this)}
 						value={this.props.name}
 						name="name"
-						className="field half first"
+						style={{marginRight: '5px'}}
+						inputStyle={{marginTop: '6px'}}
 					/>
-				</div>
 
-				<div>
 					<SelectField
 						floatingLabelText="誰的親友"
 						value={this.props.relation}
 						onChange={this.handleSelectRelation.bind(this)}
-						className="field half"
+						style={{marginLeft: '5px'}}
 					>
 						<MenuItem
 							value={1}
@@ -78,28 +81,28 @@ export default class Form extends React.Component {
 				</div>
 
 				<div>
-					<RadioButtonGroup
-						name="attend"
-						defaultSelected="coming"
+					<SelectField
+						floatingLabelText="來嗎？"
+						value={this.props.attend}
+						onChange={this.handleSelectAction.bind(this)}
+						style={{width: '522px'}}
 					>
-						<RadioButton
-							value="coming"
-							label="一定來"
+						<MenuItem
+							value="wedding_and_ceremony"
+							primaryText="我要來！我還想參加儀式"
 						/>
 
-						<RadioButton
+						<MenuItem
+							value="wedding_only"
+							primaryText="我要來！但儀式放棄"
+						/>
+
+						<MenuItem
 							value="not_coming"
-							label="不來"
+							primaryText="很抱歉無法前來"
 						/>
-					</RadioButtonGroup>
-				</div>
+					</SelectField>
 
-				<div>
-					<Checkbox
-						checkedIcon={<ActionFavorite />}
-						uncheckedIcon={<ActionFavoriteBorder />}
-						label="參加儀式"
-					/>
 				</div>
 
 				<div>
@@ -109,18 +112,16 @@ export default class Form extends React.Component {
 						name="phone"
 						floatingLabelText="電話"
 						type="tel"
-						className="field half first"
+						style={{marginRight: '5px'}}
 					/>
-				</div>
 
-				<div>
 					<TextField
 						onChange={this.handleChange.bind(this)}
 						value={this.props.email}
 						name="email"
 						floatingLabelText="E-Mail"
 						type="email"
-						className="field half"
+						style={{marginLeft: '5px'}}
 					/>
 				</div>
 
@@ -130,7 +131,7 @@ export default class Form extends React.Component {
 						value={this.props.address}
 						name="address"
 						floatingLabelText="地址"
-						className="field"
+						style={{width: '522px'}}
 					/>
 				</div>
 
@@ -139,6 +140,7 @@ export default class Form extends React.Component {
 						type="submit"
 						label="Submit"
 						primary
+						style={{marginTop: '10px'}}
 					/>
 				</div>
 			</form>
