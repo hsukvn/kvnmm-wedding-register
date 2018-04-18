@@ -750,6 +750,11 @@
 		margin: 0 0 2em 0;
 	}
 
+		form .center {
+			display: table;
+			margin: auto;
+		}
+
 		form .field {
 			margin: 0 0 1.5em 0;
 		}
@@ -757,11 +762,13 @@
 			form .field.half {
 				width: 50%;
 				float: left;
-				padding: 0 0 0 0.75em;
+				/*padding: 0 0 0 0.75em;*/
+				margin: 0 0 0 5px;
 			}
 
 				form .field.half.first {
-					padding: 0 0.75em 0 0;
+					/*padding: 0 0.75em 0 0;*/
+					margin: 0 5px 0 0;
 				}
 
 		form > .actions {
@@ -775,11 +782,13 @@
 			}
 
 				form .field.half {
-					padding: 0 0 0 0.5em;
+					/* padding: 0 0 0 0.5em; */
+					margin: 0 0 0 1px;
 				}
 
 					form .field.half.first {
-						padding: 0 0.5em 0 0;
+						/* padding: 0 0.5em 0 0; */
+						margin: 0 1px 0 0;
 					}
 
 			form > .actions {
@@ -794,10 +803,12 @@
 				width: 100%;
 				float: none;
 				padding: 0;
+				margin: 0;
 			}
 
 				form .field.half.first {
 					padding: 0;
+					margin: 0;
 				}
 
 		}

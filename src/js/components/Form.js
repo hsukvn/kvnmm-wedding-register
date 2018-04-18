@@ -50,23 +50,25 @@ export default class Form extends React.Component {
 	}
 
 	render() {
+		let styleFieldSingle = window.matchMedia('only screen and (max-width: 480px)').matches ? {} : {width: '522px'};
+		let styleButton = {marginTop: '25px'};
+
 		return (
 			<form onSubmit={this.handleSubmit.bind(this)}>
-				<div>
+				<div className="center">
 					<TextField
 						floatingLabelText="姓名"
 						onChange={this.handleChange.bind(this)}
 						value={this.props.name}
 						name="name"
-						style={{marginRight: '5px'}}
-						inputStyle={{marginTop: '6px'}}
+						className="field half first"
 					/>
 
 					<SelectField
 						floatingLabelText="誰的親友"
 						value={this.props.relation}
 						onChange={this.handleSelectRelation.bind(this)}
-						style={{marginLeft: '5px'}}
+						className="field half"
 					>
 						<MenuItem
 							value={1}
@@ -85,7 +87,7 @@ export default class Form extends React.Component {
 						floatingLabelText="來嗎？"
 						value={this.props.attend}
 						onChange={this.handleSelectAction.bind(this)}
-						style={{width: '522px'}}
+						style={styleFieldSingle}
 					>
 						<MenuItem
 							value="wedding_and_ceremony"
@@ -105,14 +107,14 @@ export default class Form extends React.Component {
 
 				</div>
 
-				<div>
+				<div className="center">
 					<TextField
 						onChange={this.handleChange.bind(this)}
 						value={this.props.phone}
 						name="phone"
 						floatingLabelText="電話"
 						type="tel"
-						style={{marginRight: '5px'}}
+						className="field half first"
 					/>
 
 					<TextField
@@ -121,7 +123,7 @@ export default class Form extends React.Component {
 						name="email"
 						floatingLabelText="E-Mail"
 						type="email"
-						style={{marginLeft: '5px'}}
+						className="field half"
 					/>
 				</div>
 
@@ -131,7 +133,7 @@ export default class Form extends React.Component {
 						value={this.props.address}
 						name="address"
 						floatingLabelText="地址"
-						style={{width: '522px'}}
+						style={styleFieldSingle}
 					/>
 				</div>
 
@@ -140,7 +142,7 @@ export default class Form extends React.Component {
 						type="submit"
 						label="Submit"
 						primary
-						style={{marginTop: '10px'}}
+						style={styleButton}
 					/>
 				</div>
 			</form>
