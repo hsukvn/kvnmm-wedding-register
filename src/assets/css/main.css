@@ -750,13 +750,34 @@
 		margin: 0 0 2em 0;
 	}
 
-		form .center {
+		form .field {
+			margin: 0 0 1.5em 0;
+		}
+
+		form .row {
 			display: table;
 			margin: auto;
 		}
 
-		form .field {
-			margin: 0 0 1.5em 0;
+		form .column {
+			display: table-cell;
+			width: auto;
+		}
+
+		form .column.first {
+			width: 50%;
+			margin: 0 5px 0 0;
+		}
+
+		form .column.second {
+			width: 25%;
+			text-align: left;
+			margin: 0 5px 0 5px;
+		}
+
+		form .column.third {
+			width: 15%;
+			margin: 0 0 0 5px;
 		}
 
 			form .field.half {

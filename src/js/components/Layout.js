@@ -12,7 +12,7 @@ export default class Layout extends React.Component {
 			members: [{
 				name: '',
 				vegetarian: false,
-				baby_sit: false,
+				babychair: false,
 			}],
 			attend: null,
 			email: '',

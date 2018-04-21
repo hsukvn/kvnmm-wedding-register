@@ -7,10 +7,25 @@ import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
 import Checkbox from 'material-ui/Checkbox';
 import ActionFavorite from 'material-ui/svg-icons/action/favorite';
 import ActionFavoriteBorder from 'material-ui/svg-icons/action/favorite-border';
+import FloatingActionButton from 'material-ui/FloatingActionButton';
+import ContentAdd from 'material-ui/svg-icons/content/add';
+import ContentRemove from 'material-ui/svg-icons/content/remove';
 
 export default class Form extends React.Component {
 	handleChange(e) {
 		this.props.changeState(e.target.name, e.target.value);
+	}
+
+	handleNameChange(e) {
+		const newMembers = this.props.members.map((m, i) => {
+			if (0 !== i) {
+				return m;
+			}
+			return { ...m, name: e.target.value };
+		});
+
+		this.props.changeState('name', e.target.value);
+		this.props.changeState('members', newMembers);
 	}
 
 	handleSelectRelation(e, index, value) {
@@ -21,12 +36,54 @@ export default class Form extends React.Component {
 		this.props.changeState('attend', value);
 	}
 
-	handleMemberChange = (member, idx) => (e) => {
+	handleMemberAdd() {
+		this.props.changeState('members',
+			this.props.members.concat([{
+				name: '',
+				vegetarian: false,
+				babychair: false,
+			}])
+		);
+	}
+
+	handleMemberRemove = (idx) => () => {
+		this.props.changeState('members',
+			this.props.members.filter((m, i) => idx !== i)
+		);
+	}
+
+	handleMemberNameChange = (idx) => (e) => {
 		const newMembers = this.props.members.map((m, i) => {
 			if (idx !== i) {
 				return m;
 			}
 			return { ...m, name: e.target.value };
+		});
+
+		this.props.changeState('members', newMembers);
+
+		if (0 === idx) {
+			this.props.changeState('name', e.target.value);
+		}
+	}
+
+	handleMemberVegetarianCheck = (idx) => (e, checked) => {
+		const newMembers = this.props.members.map((m, i) => {
+			if (idx !== i) {
+				return m;
+			}
+			return { ...m, vegetarian: checked };
+		});
+
+		this.props.changeState('members', newMembers);
+	}
+
+	handleMemberBabySitCheck = (idx) => (e, checked) => {
+		const newMembers = this.props.members.map((m, i) => {
+			if (idx !== i) {
+				return m;
+			}
+			return { ...m, babychair: checked };
 		});
 
 		this.props.changeState('members', newMembers);
@@ -66,10 +123,10 @@ export default class Form extends React.Component {
 
 		return (
 			<form onSubmit={this.handleSubmit.bind(this)}>
-				<div className="center">
+				<div className="row">
 					<TextField
 						floatingLabelText="姓名"
-						onChange={this.handleChange.bind(this)}
+						onChange={this.handleNameChange.bind(this)}
 						value={this.props.name}
 						name="name"
 						className="field half first"
@@ -118,15 +175,56 @@ export default class Form extends React.Component {
 				</div>
 
 				{this.props.members.map((member, idx) => (
-					<TextField
-						value={member.name}
-						onChange={this.handleMemberChange(member, idx)}
-						name={'member_' + idx}
-						key={'member_' + idx}
-					/>
+					<div className="row">
+						<div className="column first">
+							<TextField
+								floatingLabelText="姓名"
+								value={member.name}
+								onChange={this.handleMemberNameChange(idx).bind(this)}
+								name={'name_' + idx}
+								key={'name_' + idx}
+							/>
+						</div>
+
+						<div className="column second">
+							<Checkbox
+								label="吃素"
+								checked={member.vegetarian}
+								onCheck={this.handleMemberVegetarianCheck(idx).bind(this)}
+								name={'vegetarian_' + idx}
+								key={'vegetarian_' + idx}
+							/>
+
+							<Checkbox
+								label="寶寶椅"
+								checked={member.babychair}
+								onCheck={this.handleMemberBabySitCheck(idx).bind(this)}
+								name={'babychair_' + idx}
+								key={'babychair_' + idx}
+							/>
+						</div>
+
+						<div className="column third">
+						{idx === 0 ? (
+							<FloatingActionButton
+								mini={true}
+								onClick={this.handleMemberAdd.bind(this)}
+							>
+								<ContentAdd />
+							</FloatingActionButton>
+						) : (
+							<FloatingActionButton
+								mini={true}
+								onClick={this.handleMemberRemove(idx).bind(this)}
+							>
+								<ContentRemove />
+							</FloatingActionButton>
+						)}
+						</div>
+					</div>
 				))}
 
-				<div className="center">
+				<div className="row">
 					<TextField
 						onChange={this.handleChange.bind(this)}
 						value={this.props.phone}
