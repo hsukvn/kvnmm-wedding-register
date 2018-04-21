@@ -21,6 +21,17 @@ export default class Form extends React.Component {
 		this.props.changeState('attend', value);
 	}
 
+	handleMemberChange = (member, idx) => (e) => {
+		const newMembers = this.props.members.map((m, i) => {
+			if (idx !== i) {
+				return m;
+			}
+			return { ...m, name: e.target.value };
+		});
+
+		this.props.changeState('members', newMembers);
+	}
+
 	handleSubmit(e) {
 		e.preventDefault();
 		// call api
@@ -104,8 +115,16 @@ export default class Form extends React.Component {
 							primaryText="很抱歉無法前來"
 						/>
 					</SelectField>
-
 				</div>
+
+				{this.props.members.map((member, idx) => (
+					<TextField
+						value={member.name}
+						onChange={this.handleMemberChange(member, idx)}
+						name={'member_' + idx}
+						key={'member_' + idx}
+					/>
+				))}
 
 				<div className="center">
 					<TextField

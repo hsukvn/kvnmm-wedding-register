@@ -9,7 +9,11 @@ export default class Layout extends React.Component {
 		this.state = {
 			name: '',
 			relation: null,
-			members: [],
+			members: [{
+				name: '',
+				vegetarian: false,
+				baby_sit: false,
+			}],
 			attend: null,
 			email: '',
 			phone: '',
