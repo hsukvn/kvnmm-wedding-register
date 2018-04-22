@@ -1,7 +1,6 @@
 import React from "react";
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-
-import Form from "./Form";
+import Form from "./form/form";
 
 export default class Layout extends React.Component {
 	constructor() {
@@ -32,19 +31,17 @@ export default class Layout extends React.Component {
 	render() {
 		return (
 			<MuiThemeProvider>
-				<div>
-					<Form 
-						changeState={this.changeState.bind(this)}
-						name={this.state.name}
-						relation={this.state.relation}
-						members={this.state.members}
-						attend={this.state.attend}
-						email={this.state.email}
-						phone={this.state.phone}
-						address={this.state.address}
-						loading={this.state.loading}
-					/>
-				</div>
+				<Form 
+					changeState={this.changeState.bind(this)}
+					name={this.state.name}
+					relation={this.state.relation}
+					members={this.state.members}
+					attend={this.state.attend}
+					email={this.state.email}
+					phone={this.state.phone}
+					address={this.state.address}
+					loading={this.state.loading}
+				/>
 			</MuiThemeProvider>
 		);
 	}

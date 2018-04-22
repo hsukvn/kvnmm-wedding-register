@@ -750,6 +750,11 @@
 		margin: 0 0 2em 0;
 	}
 
+		form .center {
+			display: table;
+			margin: auto;
+		}
+
 		form .field {
 			margin: 0 0 1.5em 0;
 		}
@@ -770,7 +775,7 @@
 		}
 
 		form .column.second {
-			width: 25%;
+			width: 20%;
 			text-align: left;
 			margin: 0 5px 0 5px;
 		}
@@ -1810,7 +1815,7 @@
 	}
 
 		.main > .content {
-			width: 45em;
+			/* width: 45em; */
 			max-width: calc(100% - 4em);
 			margin: 0 auto;
 		}
