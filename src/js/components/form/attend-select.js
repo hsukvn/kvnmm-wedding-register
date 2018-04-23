@@ -3,6 +3,7 @@ import SelectField from 'material-ui/SelectField';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui-next/styles';
 import MenuItem from 'material-ui/MenuItem';
+import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
 
 const styles = theme => ({
 });
@@ -14,27 +15,23 @@ class AttendSelect extends React.Component {
 		const  styleFieldSingle = window.matchMedia('only screen and (max-width: 480px)').matches ? {} : {width: '522px'};
 
 		return (
-			<SelectField
-				floatingLabelText="來嗎？"
-				value={this.props.value}
-				onChange={this.props.onChange}
-				style={styleFieldSingle}
-			>
-				<MenuItem
+			<RadioButtonGroup name="attend" defaultSelected="wedding_and_ceremony">
+				<RadioButton
 					value="wedding_and_ceremony"
-					primaryText="我要來！我還想參加儀式"
+					label="我要來！我還想參加儀式"
+					style={{marginTop: 8, marginBottom: 8, fontSize: '16px'}}
 				/>
-
-				<MenuItem
+				<RadioButton
 					value="wedding_only"
-					primaryText="我要來！但儀式放棄"
+					label="我要來！但儀式放棄"
+					style={{marginBottom: 8, fontSize: '16px'}}
 				/>
-
-				<MenuItem
+				<RadioButton
 					value="not_coming"
-					primaryText="很抱歉無法前來"
+					label="很抱歉無法前來"
+					style={{marginBottom: 8, fontSize: '16px'}}
 				/>
-			</SelectField>
+			</RadioButtonGroup>
 		)
 	}
 }

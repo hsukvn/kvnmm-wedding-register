@@ -17,6 +17,7 @@ import MailField from './mail-field'
 const styles = theme => ({
 	root: {
 		flexGrow: 1,
+		textAlign: 'left',
 	},
 });
 
@@ -149,7 +150,7 @@ class Form extends React.Component {
 						</Grid>
 					</Grid>
 
-					<Grid container justify="center" direction="row" spacing={8}>
+					<Grid container direction="row" spacing={8}>
 						<Grid item xs={12}>
 							<AttendSelect
 								value={this.props.attend}
