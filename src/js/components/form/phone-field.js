@@ -17,6 +17,7 @@ class PhoneField extends React.Component {
 				type="tel"
 				value={this.props.value}
 				onChange={this.props.onChange}
+				style={{width: '100%'}}
 			/>
 		);
 	}

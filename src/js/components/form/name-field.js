@@ -19,6 +19,7 @@ class NameField extends React.Component {
 				value={this.props.value}
 				onChange={this.props.onChange}
 				margin="normal"
+				style={{width: '100%'}}
 			/>
 		);
 	}

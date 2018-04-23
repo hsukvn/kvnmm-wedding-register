@@ -1,6 +1,5 @@
 import React from "react";
 import RaisedButton from 'material-ui/RaisedButton';
-import Checkbox from 'material-ui/Checkbox';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import ContentRemove from 'material-ui/svg-icons/content/remove';
@@ -13,11 +12,19 @@ import AttendSelect from './attend-select'
 import AddressField from './address-field'
 import PhoneField from './phone-field'
 import MailField from './mail-field'
+import List, { ListItem, ListItemSecondaryAction, ListItemText } from 'material-ui-next/List';
+import Checkbox from 'material-ui/Checkbox';
 
 const styles = theme => ({
 	root: {
 		flexGrow: 1,
-		textAlign: 'left',
+		textAlign: window.matchMedia('only screen and (max-width: 480px)').matches ? 'center' : 'left'
+	},
+
+	list: {
+		width: '100%',
+		maxWidth: 360,
+		backgroundColor: theme.palette.background.paper,
 	},
 });
 
@@ -135,14 +142,14 @@ class Form extends React.Component {
 		return (
 			<form onSubmit={this.handleSubmit.bind(this)}>
 				<Grid className={classes.root}>
-					<Grid container justify="center" direction="row" spacing={8}>
-						<Grid item xs={6}>
+					<Grid container justify="center" direction="row" spacing={16}>
+						<Grid item xs={8} sm={6}>
 							<NameField
 								value={this.props.name}
 								onChange={this.handleNameChange.bind(this)}
 							/>
 						</Grid>
-						<Grid item xs={6}>
+						<Grid item xs={8} sm={6}>
 							<RelationSelect
 								value={this.props.relation}
 								onChange={this.handleSelectRelation.bind(this)}
@@ -150,8 +157,8 @@ class Form extends React.Component {
 						</Grid>
 					</Grid>
 
-					<Grid container direction="row" spacing={8}>
-						<Grid item xs={12}>
+					<Grid container justify="center" direction="row" spacing={16}>
+						<Grid item xs={8} sm={12}>
 							<AttendSelect
 								value={this.props.attend}
 								onChange={this.handleSelectAction.bind(this)}
@@ -159,64 +166,14 @@ class Form extends React.Component {
 						</Grid>
 					</Grid>
 
-					{this.props.members.map((member, idx) => (
-						<Grid container justify="center" direction="row" spacing={8}>
-							<Grid item xs={6}>
-								<NameField
-									value={member.name}
-									onChange={this.handleMemberNameChange(idx).bind(this)}
-									name={'name_' + idx}
-									key={'name_' + idx}
-								/>
-							</Grid>
-							<Grid item xs={2}>
-								<Checkbox
-									label="吃素"
-									checked={member.vegetarian}
-									onCheck={this.handleMemberVegetarianCheck(idx).bind(this)}
-									name={'vegetarian_' + idx}
-									key={'vegetarian_' + idx}
-								/>
-							</Grid>
-							<Grid item xs={2}>
-								<Checkbox
-									label="寶寶椅"
-									checked={member.babychair}
-									onCheck={this.handleMemberBabySitCheck(idx).bind(this)}
-									name={'babychair_' + idx}
-									key={'babychair_' + idx}
-								/>
-							</Grid>
-							<Grid item xs={2}>
-							{idx === 0 ? (
-								<FloatingActionButton
-									mini={true}
-									onClick={this.handleMemberAdd.bind(this)}
-									key={'btn_' + idx}
-								>
-									<ContentAdd />
-								</FloatingActionButton>
-							) : (
-								<FloatingActionButton
-									mini={true}
-									onClick={this.handleMemberRemove(idx).bind(this)}
-									key={'btn_' + idx}
-								>
-									<ContentRemove />
-								</FloatingActionButton>
-							)}
-							</Grid>
-						</Grid>
-					))}
-
-					<Grid container justify="center" direction="row" spacing={8}>
-						<Grid item xs={6}>
+					<Grid container justify="center" direction="row" spacing={16}>
+						<Grid item xs={8} sm={6}>
 							<PhoneField
 								value={this.props.phone}
 								onChange={this.handleChange.bind(this)}
 							/>
 						</Grid>
-						<Grid item xs={6}>
+						<Grid item xs={8} sm={6}>
 							<MailField
 								onChange={this.handleChange.bind(this)}
 								value={this.props.email}
@@ -224,12 +181,46 @@ class Form extends React.Component {
 						</Grid>
 					</Grid>
 
-					<Grid container justify="center" direction="row">
-						<AddressField
-							onChange={this.handleChange.bind(this)}
-							value={this.props.address}
-						/>
+					<Grid container justify="center" direction="row" spacing={16}>
+						<Grid item xs={8} sm={12}>
+							<AddressField
+								onChange={this.handleChange.bind(this)}
+								value={this.props.address}
+							/>
+						</Grid>
 					</Grid>
+
+					{this.props.members.map((member, idx) => (
+						<Grid container justify="center" direction="row" alignItems="flex-end">
+							<Grid item xs={8} sm={6}>
+								<NameField
+									value={member.name}
+									onChange={this.handleMemberNameChange(idx).bind(this)}
+									name={'name_' + idx}
+									key={'name_' + idx}
+								/>
+							</Grid>
+							<Grid item xs={4} sm={3}>
+                                <Checkbox
+                                    label="吃素"
+                                    checked={member.vegetarian}
+                                    onCheck={this.handleMemberVegetarianCheck(idx).bind(this)}
+                                    name={'vegetarian_' + idx}
+                                    key={'vegetarian_' + idx}
+                                    color="primary"
+                                />
+                            </Grid>
+							<Grid item xs={4} sm={3}>
+                                <Checkbox
+                                    label="寶寶椅"
+                                    checked={member.babychair}
+                                    onCheck={this.handleMemberBabySitCheck(idx).bind(this)}
+                                    name={'babychair_' + idx}
+                                    key={'babychair_' + idx}
+                                />
+                            </Grid>
+						</Grid>
+					))}
 
 					<Grid container justify="center" direction="row">
 						<RaisedButton

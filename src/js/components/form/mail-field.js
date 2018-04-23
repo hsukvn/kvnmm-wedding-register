@@ -17,6 +17,7 @@ class MailField extends React.Component {
 				type="email"
 				onChange={this.props.onChange}
 				value={this.props.value}
+				style={{width: '100%'}}
 			/>
 		);
 	}

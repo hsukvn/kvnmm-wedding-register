@@ -16,8 +16,8 @@ class RelationSelect extends React.Component {
 				floatingLabelText="誰的親友"
 				value={this.props.value}
 				onChange={this.props.onChange}
-				className="field half"
 				margin="normal"
+				style={{width: '100%'}}
 			>
 				<MenuItem
 					value={1}

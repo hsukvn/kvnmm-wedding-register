@@ -11,7 +11,6 @@ class AddressField extends React.Component {
 
 	render() {
 		const { classes } = this.props;
-		const  styleFieldSingle = window.matchMedia('only screen and (max-width: 480px)').matches ? {} : {width: '522px'};
 
 		return (
 			<TextField
@@ -19,7 +18,7 @@ class AddressField extends React.Component {
 				value={this.props.value}
 				name="address"
 				floatingLabelText="地址"
-				style={styleFieldSingle}
+				style={{width: '100%'}}
 			/>
 		)
 	}
