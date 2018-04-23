@@ -1,6 +1,11 @@
 import React from "react";
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import Form from "./form/form";
+
+const muiTheme = getMuiTheme({
+	fontFamily: 'Noto Sans TC',
+});
 
 export default class Layout extends React.Component {
 	constructor() {
@@ -30,7 +35,7 @@ export default class Layout extends React.Component {
 
 	render() {
 		return (
-			<MuiThemeProvider>
+			<MuiThemeProvider muiTheme={muiTheme}>
 				<Form 
 					changeState={this.changeState.bind(this)}
 					name={this.state.name}

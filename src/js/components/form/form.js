@@ -149,7 +149,7 @@ class Form extends React.Component {
 						</Grid>
 					</Grid>
 
-					<Grid container justify="center" direction="row">
+					<Grid container justify="center" direction="row" spacing={8}>
 						<Grid item xs={12}>
 							<AttendSelect
 								value={this.props.attend}
