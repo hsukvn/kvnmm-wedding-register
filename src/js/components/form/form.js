@@ -190,6 +190,7 @@ class Form extends React.Component {
 						</Grid>
 					</Grid>
 
+{/* FIXME Think better way
 					{this.props.members.map((member, idx) => (
 						<Grid container justify="center" direction="row" alignItems="flex-end">
 							<Grid item xs={8} sm={6}>
@@ -221,6 +222,7 @@ class Form extends React.Component {
                             </Grid>
 						</Grid>
 					))}
+*/}
 
 					<Grid container justify="center" direction="row">
 						<RaisedButton
