@@ -136,7 +136,7 @@ class Form extends React.Component {
 
 	render() {
 		let styleFieldSingle = window.matchMedia('only screen and (max-width: 480px)').matches ? {} : {width: '522px'};
-		let styleButton = {marginTop: '25px'};
+		let styleButton = {marginTop: '25px', lineHeight: '0px'};
 		const { classes } = this.props;
 
 		return (
