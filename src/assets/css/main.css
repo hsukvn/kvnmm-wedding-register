@@ -2144,7 +2144,7 @@
 /* Intro */
 
 	#intro {
-		background: url("images/overlay.png"), url("../../images/L1040083.jpg");
+		background: url("images/overlay.png"), url("../../images/L1040083_1920x1280.jpg");
 		background-size: 256px 256px, cover;
 		background-attachment: fixed, fixed;
 		background-position: top left, bottom center;
@@ -2154,7 +2154,7 @@
 /* One */
 
 	#one {
-		background: url("images/overlay.png"), url("../../images/DJI_0072.JPG");
+		background: url("images/overlay.png"), url("../../images/DJI_0072_1920x1080.jpg");
 		background-size: 256px 256px, cover;
 		background-attachment: fixed, fixed;
 		background-position: top left, center center;
@@ -2163,7 +2163,7 @@
 /* Two */
 
 	#two {
-		background: url("images/overlay.png"), url("../../images/DSC02656.JPG");
+		background: url("images/overlay.png"), url("../../images/DSC02656_1920x1280.jpg");
 		background-size: 256px 256px, cover;
 		background-attachment: fixed, fixed;
 		background-position: top left, center center;
@@ -2172,7 +2172,7 @@
 /* Three */
 
 	#three {
-		background: url("images/overlay.png"), url("../../images/L1040154.JPG");
+		background: url("images/overlay.png"), url("../../images/L1040154_1920x1280.jpg");
 		background-size: 256px 256px, cover;
 		background-attachment: fixed, fixed;
 		background-position: top left, center center;
