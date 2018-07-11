@@ -3,6 +3,7 @@
 @import url("font-awesome.min.css");
 */
 
+@import url("font-awesome.min.css");
 @import url(https://fonts.googleapis.com/earlyaccess/notosanstc.css);
 
 /*
@@ -414,7 +415,7 @@
 			transform-origin: 50% 50%;
 			-moz-osx-font-smoothing: grayscale;
 			-webkit-font-smoothing: antialiased;
-			font-family: 'Noto Sans TC';
+			font-family: FontAwesome;
 			font-style: normal;
 			font-weight: normal;
 			text-transform: none !important;
