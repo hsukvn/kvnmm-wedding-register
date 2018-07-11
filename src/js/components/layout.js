@@ -18,7 +18,8 @@ export default class Layout extends React.Component {
 				vegetarian: false,
 				babychair: false,
 			}],
-			attend: null,
+			attend: 'coming',
+			invitation: 'paper_invitation',
 			email: '',
 			phone: '',
 			address: '',
@@ -42,6 +43,7 @@ export default class Layout extends React.Component {
 					relation={this.state.relation}
 					members={this.state.members}
 					attend={this.state.attend}
+					invitation={this.state.invitation}
 					email={this.state.email}
 					phone={this.state.phone}
 					address={this.state.address}

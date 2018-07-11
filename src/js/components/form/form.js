@@ -9,6 +9,7 @@ import { withStyles } from 'material-ui-next/styles';
 import PropTypes from 'prop-types';
 import RelationSelect from './relation-select'
 import AttendSelect from './attend-select'
+import InvitationSelect from './invitation-select'
 import AddressField from './address-field'
 import PhoneField from './phone-field'
 import MailField from './mail-field'
@@ -49,8 +50,12 @@ class Form extends React.Component {
 		this.props.changeState('relation', value);
 	}
 
-	handleSelectAction(e, index, value) {
+	handleAttendSelectAction(e, value) {
 		this.props.changeState('attend', value);
+	}
+
+	handleInvitationSelectAction(e, value) {
+		this.props.changeState('invitation', value);
 	}
 
 	handleMemberAdd() {
@@ -108,6 +113,13 @@ class Form extends React.Component {
 
 	handleSubmit(e) {
 		e.preventDefault();
+
+		let invitation_map = {
+			'paper_invitation': 1,
+			'mail_invitaion': 2,
+			'paper_mail_invitation': 3
+		}
+
 		// call api
 		$.ajax({
 			url: '/api/attendee',
@@ -118,6 +130,7 @@ class Form extends React.Component {
 				relation: this.props.relation,
 				members: this.props.members,
 				attend: (this.props.attend === 'coming') ,
+				invitation: invitation_map[this.props.invitation],
 				email: this.props.email,
 				phone: this.props.phone,
 				address: this.props.address,
@@ -160,7 +173,16 @@ class Form extends React.Component {
 						<Grid item xs={8} sm={12}>
 							<AttendSelect
 								value={this.props.attend}
-								onChange={this.handleSelectAction.bind(this)}
+								onChange={this.handleAttendSelectAction.bind(this)}
+							/>
+						</Grid>
+					</Grid>
+
+					<Grid container justify="center" direction="row" spacing={16}>
+						<Grid item xs={8} sm={12}>
+							<InvitationSelect
+								value={this.props.invitation}
+								onChange={this.handleInvitationSelectAction.bind(this)}
 							/>
 						</Grid>
 					</Grid>

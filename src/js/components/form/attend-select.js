@@ -13,21 +13,22 @@ class AttendSelect extends React.Component {
 
 		return (
 			<div>
-				<p>是否要參加呢？</p>
+				<p style={{textAlign: 'left'}}>是否要參加呢？</p>
 				<RadioButtonGroup
 					name="attend"
 					defaultSelected="coming"
+					onChange={this.props.onChange}
 					style={{width: '100%'}}
 				>
 					<RadioButton
 						value="coming"
 						label="我要來！"
-						style={{marginTop: 24, marginBottom: 8, fontSize: '16px', textAlign: 'left'}}
+						style={{fontSize: '16px', textAlign: 'left'}}
 					/>
 					<RadioButton
 						value="not_coming"
 						label="很抱歉無法前來"
-						style={{fontSize: '16px', textAlign: 'left'}}
+						style={{marginBottom: '16px', fontSize: '16px', textAlign: 'left'}}
 					/>
 				</RadioButtonGroup>
 			</div>
