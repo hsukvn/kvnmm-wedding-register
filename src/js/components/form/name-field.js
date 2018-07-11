@@ -14,8 +14,6 @@ class NameField extends React.Component {
 			<TextField
 				required
 				floatingLabelText="姓名"
-				key={this.props.key}
-				name={this.props.name}
 				value={this.props.value}
 				onChange={this.props.onChange}
 				margin="normal"
