@@ -13,7 +13,7 @@ class InvitationSelect extends React.Component {
 
 		return (
 			<div>
-				<p style={{textAlign: 'left'}}>想要哪種喜帖呢？</p>
+				<p style={{textAlign: 'left'}}>想要紙本喜帖嗎？</p>
 				<RadioButtonGroup
 					name="invitation"
 					defaultSelected="paper_invitation"
@@ -28,11 +28,6 @@ class InvitationSelect extends React.Component {
 					<RadioButton
 						value="mail_invitaion"
 						label="給我 email 喜帖就好囉"
-						style={{fontSize: '16px', textAlign: 'left'}}
-					/>
-					<RadioButton
-						value="paper_mail_invitation"
-						label="我兩個都要！"
 						style={{fontSize: '16px', textAlign: 'left'}}
 					/>
 				</RadioButtonGroup>

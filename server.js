@@ -6,9 +6,9 @@ var express  = require('express');
 var app      = express();
 
 var mongoose = require('mongoose');
-var morgan = require('morgan');
+var morgan   = require('morgan');
 
-var bodyParser = require('body-parser');
+var bodyParser     = require('body-parser');
 var methodOverride = require('method-override'); // for delete method
 
 var AttendeeScema = new mongoose.Schema({
@@ -20,7 +20,7 @@ var AttendeeScema = new mongoose.Schema({
 		babychair: Boolean
 	}],
 	attend: { type: Boolean, required: true },
-	ceremony_attend: { type: Boolean, required: true },
+	paper_invitation: { type: Boolean, required: true },
 	email: String,
 	phone: String,
 	address: String
@@ -61,7 +61,7 @@ app.post('/api/attendee', function(req, res) {
 		relation: req.body.relation,
 		members: req.body.members ? req.body.members : [],
 		attend: req.body.attend ? req.body.attend : false,
-		ceremony_attend: req.body.ceremony_attend ? req.body.ceremony_attend : false,
+		paper_invitation: req.body.paper_invitation ? req.body.paper_invitation : false,
 		email: req.body.email ? req.body.email : '',
 		phone: req.body.phone ? req.body.phone : '',
 		address: req.body.address ? req.body.address : ''
