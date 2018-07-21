@@ -13,20 +13,14 @@ import InvitationSelect from './invitation-select'
 import AddressField from './address-field'
 import PhoneField from './phone-field'
 import MailField from './mail-field'
-import List, { ListItem, ListItemSecondaryAction, ListItemText } from 'material-ui-next/List';
+import MsgField from './msg-field'
 import Checkbox from 'material-ui/Checkbox';
 
 const styles = theme => ({
 	root: {
 		flexGrow: 1,
 		textAlign: window.matchMedia('only screen and (max-width: 480px)').matches ? 'center' : 'left'
-	},
-
-	list: {
-		width: '100%',
-		maxWidth: 360,
-		backgroundColor: theme.palette.background.paper,
-	},
+	}
 });
 
 class Form extends React.Component {
