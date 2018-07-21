@@ -128,6 +128,7 @@ class Form extends React.Component {
 				email: this.props.email,
 				phone: this.props.phone,
 				address: this.props.address,
+				message: this.props.message,
 			},
 			success: function(data) {
 				// FIXME: do handler
@@ -238,6 +239,14 @@ class Form extends React.Component {
 						</Grid>
 					))}
 */}
+					<Grid container justify="center" direction="row" spacing={16}>
+						<Grid item xs={8} sm={12}>
+							<MsgField
+								onChange={this.handleChange.bind(this)}
+								value={this.props.message}
+							/>
+						</Grid>
+					</Grid>
 
 					<Grid container justify="center" direction="row">
 						<RaisedButton

@@ -23,7 +23,8 @@ var AttendeeScema = new mongoose.Schema({
 	paper_invitation: { type: Boolean, required: true },
 	email: String,
 	phone: String,
-	address: String
+	address: String,
+	message: String,
 });
 
 var Attendee = mongoose.model('attendee', AttendeeScema);
@@ -64,7 +65,8 @@ app.post('/api/attendee', function(req, res) {
 		paper_invitation: req.body.paper_invitation ? req.body.paper_invitation : false,
 		email: req.body.email ? req.body.email : '',
 		phone: req.body.phone ? req.body.phone : '',
-		address: req.body.address ? req.body.address : ''
+		address: req.body.address ? req.body.address : '',
+		message: req.body.message ? req.body.message : ''
 	}, function(err, attendee) {
 		if (err) {
 			res.status(500).json(err);

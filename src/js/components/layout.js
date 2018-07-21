@@ -23,6 +23,7 @@ export default class Layout extends React.Component {
 			email: '',
 			phone: '',
 			address: '',
+			message: '',
 			loading: false,
 			error: {},
 		}
@@ -47,6 +48,7 @@ export default class Layout extends React.Component {
 					email={this.state.email}
 					phone={this.state.phone}
 					address={this.state.address}
+					message={this.state.message}
 					loading={this.state.loading}
 				/>
 			</MuiThemeProvider>
