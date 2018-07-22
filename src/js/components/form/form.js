@@ -3,17 +3,18 @@ import RaisedButton from 'material-ui/RaisedButton';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import ContentRemove from 'material-ui/svg-icons/content/remove';
-import NameField from './name-field'
+import NameField from './name-field';
 import Grid from 'material-ui-next/Grid';
 import { withStyles } from 'material-ui-next/styles';
 import PropTypes from 'prop-types';
-import RelationSelect from './relation-select'
-import AttendSelect from './attend-select'
-import InvitationSelect from './invitation-select'
-import AddressField from './address-field'
-import PhoneField from './phone-field'
-import MailField from './mail-field'
-import MsgField from './msg-field'
+import RelationSelect from './relation-select';
+import AttendSelect from './attend-select';
+import InvitationSelect from './invitation-select';
+import AddressField from './address-field';
+import PhoneField from './phone-field';
+import MailField from './mail-field';
+import MsgField from './msg-field';
+import VerifyDialog from './verify-dialog';
 import Checkbox from 'material-ui/Checkbox';
 
 const styles = theme => ({
@@ -105,40 +106,8 @@ class Form extends React.Component {
 		this.props.changeState('members', newMembers);
 	}
 
-	handleSubmit(e) {
-		e.preventDefault();
-
-		let invitation_map = {
-			'paper_invitation': 1,
-			'mail_invitaion': 2,
-			'paper_mail_invitation': 3
-		}
-
-		// call api
-		$.ajax({
-			url: '/api/attendee',
-			dataType: 'json',
-			type: 'POST',
-			data: {
-				name: this.props.name,
-				relation: this.props.relation,
-				members: this.props.members,
-				attend: (this.props.attend === 'coming'),
-				paper_invitation: (this.props.invitation === 'paper_invitation'),
-				email: this.props.email,
-				phone: this.props.phone,
-				address: this.props.address,
-				message: this.props.message,
-			},
-			success: function(data) {
-				// FIXME: do handler
-				console.log(data);
-			}.bind(this),
-			error: function(xhr, status, err) {
-				// FIXME: do handler
-				console.log(err);
-			}.bind(this)
-		})
+	openDialog(e) {
+		this.props.changeState('dialog', true);
 	}
 
 	render() {
@@ -147,7 +116,7 @@ class Form extends React.Component {
 		const { classes } = this.props;
 
 		return (
-			<form onSubmit={this.handleSubmit.bind(this)}>
+			<form>
 				<Grid className={classes.root}>
 					<Grid container justify="center" direction="row" spacing={16}>
 						<Grid item xs={8} sm={6}>
@@ -250,10 +219,24 @@ class Form extends React.Component {
 
 					<Grid container justify="center" direction="row">
 						<RaisedButton
-							type="submit"
-							label="Submit"
+							label="填完囉"
 							primary
 							style={styleButton}
+							onClick={this.openDialog.bind(this)}
+						/>
+						<VerifyDialog
+							changeState={this.props.changeState.bind(this)}
+							name={this.props.name}
+							relation={this.props.relation}
+							members={this.props.members}
+							attend={this.props.attend}
+							invitation={this.props.invitation}
+							email={this.props.email}
+							phone={this.props.phone}
+							address={this.props.address}
+							message={this.props.message}
+							dialog={this.props.dialog}
+							loading={this.props.loading}
 						/>
 					</Grid>
 				</Grid>

@@ -24,6 +24,7 @@ export default class Layout extends React.Component {
 			phone: '',
 			address: '',
 			message: '',
+			dialog: false,
 			loading: false,
 			error: {},
 		}
@@ -49,6 +50,7 @@ export default class Layout extends React.Component {
 					phone={this.state.phone}
 					address={this.state.address}
 					message={this.state.message}
+					dialog={this.state.dialog}
 					loading={this.state.loading}
 				/>
 			</MuiThemeProvider>
