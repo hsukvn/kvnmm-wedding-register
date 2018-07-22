@@ -47,10 +47,15 @@ class VerifyDialog extends React.Component {
 			success: function(data) {
 				this.changeState('submitting', false);
 				this.props.changeState('dialog', false);
+				this.props.changeState('submit_dialog', true);
+				this.props.changeState('submit_success', true);
 			}.bind(this),
 			error: function(xhr, status, err) {
 				// FIXME: do handler
 				this.changeState('submitting', false);
+				this.props.changeState('dialog', false);
+				this.props.changeState('submit_dialog', true);
+				this.props.changeState('submit_success', false);
 				console.log(err);
 			}.bind(this)
 		})

@@ -15,6 +15,7 @@ import PhoneField from './phone-field';
 import MailField from './mail-field';
 import MsgField from './msg-field';
 import VerifyDialog from './verify-dialog';
+import SubmitDialog from './submit-dialog';
 import Checkbox from 'material-ui/Checkbox';
 
 const styles = theme => ({
@@ -236,7 +237,11 @@ class Form extends React.Component {
 							address={this.props.address}
 							message={this.props.message}
 							dialog={this.props.dialog}
-							loading={this.props.loading}
+						/>
+						<SubmitDialog
+							changeState={this.props.changeState.bind(this)}
+							submit_dialog={this.props.submit_dialog}
+							submit_success={this.props.submit_success}
 						/>
 					</Grid>
 				</Grid>

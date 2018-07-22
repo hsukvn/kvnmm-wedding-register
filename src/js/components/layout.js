@@ -25,8 +25,8 @@ export default class Layout extends React.Component {
 			address: '',
 			message: '',
 			dialog: false,
-			loading: false,
-			error: {},
+			submit_dialog: false,
+			submit_success: false,
 		}
 	}
 
@@ -51,7 +51,8 @@ export default class Layout extends React.Component {
 					address={this.state.address}
 					message={this.state.message}
 					dialog={this.state.dialog}
-					loading={this.state.loading}
+					submit_dialog={this.state.submit_dialog}
+					submit_success={this.state.submit_success}
 				/>
 			</MuiThemeProvider>
 		);
