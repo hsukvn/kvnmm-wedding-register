@@ -76,6 +76,29 @@ app.post('/api/attendee', function(req, res) {
 	});
 });
 
+app.delete('/api/attendee/:id', function(req, res) {
+	if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+		res.status(400).json({error: 'id is invalid'});
+		return;
+	}
+
+	Attendee.count({_id: req.params.id}, function (err, count) {
+		if (count <= 0) {
+			res.status(404).json({err: 'id not found'});
+		} else {
+			Attendee.remove({
+				_id: req.params.id
+			}, function (err, attendee) {
+				if (err) {
+					res.status(500).json(err);
+				} else {
+					res.status(200).json({ status: 'ok' });
+				}
+			});
+		}
+	});
+});
+
 var server = app.listen(8080, function() {
 	console.log("Listening on port %s...", server.address().port);
 });
