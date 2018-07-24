@@ -76,6 +76,37 @@ app.post('/api/attendee', function(req, res) {
 	});
 });
 
+app.put('/api/attendee/:id', function(req, res) {
+	if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+		res.status(400).json({error: 'id is invalid'});
+		return;
+	}
+
+	Attendee.findById(req.params.id, function (err, attendee) {
+		if (attendee === null) {
+			res.status(404).json({err: 'id not found'});
+			return;
+		}
+
+		var updateKey = ['name', 'relation', 'members', 'attend', 'paper_invitation', 'email', 'phone', 'address', 'message'];
+		var payload = {};
+
+		updateKey.forEach(function(key) {
+			if (req.body.hasOwnProperty(key)) {
+				payload[key] = req.body[key];
+			}
+		});
+
+		Attendee.findByIdAndUpdate(req.params.id, payload, function(err) {
+			if (err) {
+				res.status(500).json(err);
+			} else {
+				res.status(200).json({ status: 'ok' });
+			}
+		})
+	});
+});
+
 app.delete('/api/attendee/:id', function(req, res) {
 	if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
 		res.status(400).json({error: 'id is invalid'});
