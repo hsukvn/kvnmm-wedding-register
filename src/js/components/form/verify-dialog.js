@@ -36,7 +36,7 @@ class VerifyDialog extends React.Component {
 			data: {
 				name: this.props.name,
 				relation: this.props.relation,
-				members: this.props.members,
+				members: (this.props.attend === 'coming') ? this.props.members : [],
 				attend: (this.props.attend === 'coming'),
 				paper_invitation: (this.props.invitation === 'paper_invitation'),
 				email: this.props.email,
@@ -51,12 +51,10 @@ class VerifyDialog extends React.Component {
 				this.props.changeState('submit_success', true);
 			}.bind(this),
 			error: function(xhr, status, err) {
-				// FIXME: do handler
 				this.changeState('submitting', false);
 				this.props.changeState('dialog', false);
 				this.props.changeState('submit_dialog', true);
 				this.props.changeState('submit_success', false);
-				console.log(err);
 			}.bind(this)
 		})
 	}

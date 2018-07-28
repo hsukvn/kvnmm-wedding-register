@@ -167,10 +167,13 @@ class Form extends React.Component {
 						</Grid>
 					</Grid>
 
-					<MemberCard
-						members={this.props.members}
-						changeState={this.props.changeState.bind(this)}
-					/>
+					{this.props.attend === 'coming' ?
+						<MemberCard
+							members={this.props.members}
+							changeState={this.props.changeState.bind(this)}
+						/>
+						: <div />
+					}
 
 					<Grid container justify="center" direction="row">
 						<Grid item xs={12} sm={12}>
