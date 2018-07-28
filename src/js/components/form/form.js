@@ -64,13 +64,13 @@ class Form extends React.Component {
 			<form>
 				<Grid className={classes.root}>
 					<Grid container justify="center" direction="row" spacing={16}>
-						<Grid item xs={8} sm={6}>
+						<Grid item xs={12} sm={6}>
 							<NameField
 								value={this.props.name}
 								onChange={this.handleNameChange.bind(this)}
 							/>
 						</Grid>
-						<Grid item xs={8} sm={6}>
+						<Grid item xs={12} sm={6}>
 							<RelationSelect
 								value={this.props.relation}
 								onChange={this.handleSelectRelation.bind(this)}
@@ -78,8 +78,8 @@ class Form extends React.Component {
 						</Grid>
 					</Grid>
 
-					<Grid container justify="center" direction="row" spacing={16}>
-						<Grid item xs={8} sm={12}>
+					<Grid container justify="center" direction="row">
+						<Grid item xs={12} sm={12}>
 							<AttendSelect
 								value={this.props.attend}
 								onChange={this.handleAttendSelectAction.bind(this)}
@@ -87,8 +87,8 @@ class Form extends React.Component {
 						</Grid>
 					</Grid>
 
-					<Grid container justify="center" direction="row" spacing={16}>
-						<Grid item xs={8} sm={12}>
+					<Grid container justify="center" direction="row">
+						<Grid item xs={12} sm={12}>
 							<InvitationSelect
 								value={this.props.invitation}
 								onChange={this.handleInvitationSelectAction.bind(this)}
@@ -97,13 +97,13 @@ class Form extends React.Component {
 					</Grid>
 
 					<Grid container justify="center" direction="row" spacing={16}>
-						<Grid item xs={8} sm={6}>
+						<Grid item xs={12} sm={6}>
 							<PhoneField
 								value={this.props.phone}
 								onChange={this.handleChange.bind(this)}
 							/>
 						</Grid>
-						<Grid item xs={8} sm={6}>
+						<Grid item xs={12} sm={6}>
 							<MailField
 								onChange={this.handleChange.bind(this)}
 								value={this.props.email}
@@ -111,8 +111,8 @@ class Form extends React.Component {
 						</Grid>
 					</Grid>
 
-					<Grid container justify="center" direction="row" spacing={16}>
-						<Grid item xs={8} sm={12}>
+					<Grid container justify="center" direction="row">
+						<Grid item xs={12} sm={12}>
 							<AddressField
 								onChange={this.handleChange.bind(this)}
 								value={this.props.address}
@@ -125,8 +125,8 @@ class Form extends React.Component {
 						changeState={this.props.changeState.bind(this)}
 					/>
 
-					<Grid container justify="center" direction="row" spacing={16}>
-						<Grid item xs={8} sm={12}>
+					<Grid container justify="center" direction="row">
+						<Grid item xs={12} sm={12}>
 							<MsgField
 								onChange={this.handleChange.bind(this)}
 								value={this.props.message}
