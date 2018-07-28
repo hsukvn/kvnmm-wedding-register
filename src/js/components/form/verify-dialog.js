@@ -81,7 +81,7 @@ class VerifyDialog extends React.Component {
 
 		return (
 			<Dialog
-				title = "Summary"
+				title = "確認一下"
 				actions = {actions}
 				modal = {false}
 				open = {this.props.dialog}
