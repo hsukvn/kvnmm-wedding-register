@@ -18,6 +18,18 @@ class SummaryTable extends React.Component {
 	render() {
 		const { classes } = this.props;
 
+		let vegetarian = 0;
+		let babychair = 0;
+
+		this.props.members.forEach(function (member) {
+			if (member.vegetarian) {
+				vegetarian++;
+			}
+			if (member.babychair) {
+				babychair++;
+			}
+		});
+
 		return (
 			<div>
 				<p>
@@ -34,6 +46,12 @@ class SummaryTable extends React.Component {
 					{this.props.email ? this.props.email : '沒填 email'}
 				<br />
 					{this.props.address ? this.props.address : '沒填地址'}
+				<br />
+					{this.props.members.length + ' 人參加'}
+				<br />
+					{vegetarian + ' 人吃素'}
+				<br />
+					{babychair + ' 張寶寶椅'}
 				<br />
 					{this.props.message ? this.props.message : '無話可說'}
 				</p>

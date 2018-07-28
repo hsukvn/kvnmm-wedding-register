@@ -1,9 +1,5 @@
 import React from "react";
 import RaisedButton from 'material-ui/RaisedButton';
-import FloatingActionButton from 'material-ui/FloatingActionButton';
-import ContentAdd from 'material-ui/svg-icons/content/add';
-import ContentRemove from 'material-ui/svg-icons/content/remove';
-import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import NameField from './name-field';
 import Grid from 'material-ui-next/Grid';
 import { withStyles } from 'material-ui-next/styles';
@@ -17,7 +13,7 @@ import MailField from './mail-field';
 import MsgField from './msg-field';
 import VerifyDialog from './verify-dialog';
 import SubmitDialog from './submit-dialog';
-import Checkbox from 'material-ui/Checkbox';
+import MemberCard from './member-card';
 
 const styles = theme => ({
 	root: {
@@ -25,10 +21,6 @@ const styles = theme => ({
 		textAlign: window.matchMedia('only screen and (max-width: 480px)').matches ? 'center' : 'left'
 	}
 });
-
-const style = {
-	marginRight: 20,
-};
 
 class Form extends React.Component {
 	handleChange(e) {
@@ -57,59 +49,6 @@ class Form extends React.Component {
 
 	handleInvitationSelectAction(e, value) {
 		this.props.changeState('invitation', value);
-	}
-
-	handleMemberAdd() {
-		this.props.changeState('members',
-			this.props.members.concat([{
-				name: '',
-				vegetarian: false,
-				babychair: false,
-			}])
-		);
-	}
-
-	handleMemberRemove = (idx) => () => {
-		let newMembers = this.props.members;
-		newMembers.splice(idx, 1);
-		this.props.changeState('members', newMembers);
-	}
-
-	handleMemberNameChange = (idx) => (e) => {
-		const newMembers = this.props.members.map((m, i) => {
-			if (idx !== i) {
-				return m;
-			}
-			return { ...m, name: e.target.value };
-		});
-
-		this.props.changeState('members', newMembers);
-
-		if (0 === idx) {
-			this.props.changeState('name', e.target.value);
-		}
-	}
-
-	handleMemberVegetarianCheck = (idx) => (e, checked) => {
-		const newMembers = this.props.members.map((m, i) => {
-			if (idx !== i) {
-				return m;
-			}
-			return { ...m, vegetarian: checked };
-		});
-
-		this.props.changeState('members', newMembers);
-	}
-
-	handleMemberBabySitCheck = (idx) => (e, checked) => {
-		const newMembers = this.props.members.map((m, i) => {
-			if (idx !== i) {
-				return m;
-			}
-			return { ...m, babychair: checked };
-		});
-
-		this.props.changeState('members', newMembers);
 	}
 
 	openDialog(e) {
@@ -181,68 +120,10 @@ class Form extends React.Component {
 						</Grid>
 					</Grid>
 
-					<Card style={{'marginTop': '20px', 'background': '#f5f6f7'}}>
-						<CardHeader
-							title="我要攜伴"
-							subtitle="所有參加的成員包含寶寶都需要填寫呦!"
-							style={{'marginBottom': '-50px'}}
-						/>
-						<CardText>
-							{this.props.members.map((member, idx) => (
-								<Grid container justify="center" direction="row" alignItems="flex-end" spacing={8}>
-									<Grid item xs={12} sm={4}>
-										<NameField
-											value={member.name}
-											onChange={this.handleMemberNameChange(idx).bind(this)}
-											name={'name_' + idx}
-											key={'name_' + idx}
-										/>
-									</Grid>
-									<Grid item xs={5} sm={3}>
-										<Checkbox
-											label="吃素"
-											checked={member.vegetarian}
-											onCheck={this.handleMemberVegetarianCheck(idx).bind(this)}
-											style={{'textAlign': 'left', 'left': '10px'}}
-											name={'vegetarian_' + idx}
-											key={'vegetarian_' + idx}
-											color="primary"
-										/>
-									</Grid>
-									<Grid item xs={5} sm={3}>
-										<Checkbox
-											label="寶寶椅"
-											checked={member.babychair}
-											onCheck={this.handleMemberBabySitCheck(idx).bind(this)}
-											style={{'textAlign': 'left'}}
-											name={'babychair_' + idx}
-											key={'babychair_' + idx}
-										/>
-									</Grid>
-									<Grid item xs={2} sm={2}>
-										{(idx == 0) ?
-											<FloatingActionButton
-												mini={true}
-												style={{'textAlign': 'center', 'marginRight': 20}}
-												onClick={this.handleMemberAdd.bind(this)}
-											>
-												<ContentAdd />
-											</FloatingActionButton>
-										:
-											<FloatingActionButton
-												mini={true}
-												secondary={true}
-												style={{'textAlign': 'center', 'marginRight': 20}}
-												onClick={this.handleMemberRemove(idx).bind(this)}
-											>
-												<ContentRemove />
-											</FloatingActionButton>
-										}
-									</Grid>
-								</Grid>
-							))}
-						</CardText>
-					</Card>
+					<MemberCard
+						members={this.props.members}
+						changeState={this.props.changeState.bind(this)}
+					/>
 
 					<Grid container justify="center" direction="row" spacing={16}>
 						<Grid item xs={8} sm={12}>
