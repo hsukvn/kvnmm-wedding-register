@@ -85,6 +85,8 @@ class VerifyDialog extends React.Component {
 				actions = {actions}
 				modal = {false}
 				open = {this.props.dialog}
+				autoScrollBodyContent = {true}
+				onRequestClose = {this.handleCancel.bind(this)}
 			>
 				<SummaryTable
 					name={this.props.name}
