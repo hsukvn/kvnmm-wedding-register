@@ -79,6 +79,7 @@ class MemberCard extends React.Component {
 					title="我要攜伴"
 					subtitle="所有參加的成員包含寶寶都需要填寫呦!"
 					style={{'marginBottom': '-50px', 'paddingRight': '0px'}}
+					textStyle={{'textAlign': 'left'}}
 				/>
 				<CardText>
 					{this.props.members.map((member, idx) => (
