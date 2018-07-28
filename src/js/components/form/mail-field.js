@@ -12,8 +12,10 @@ class MailField extends React.Component {
 
 		return (
 			<TextField
+				id="email"
 				name="email"
 				floatingLabelText="E-Mail"
+				errorText={this.props.error}
 				type="email"
 				onChange={this.props.onChange}
 				value={this.props.value}

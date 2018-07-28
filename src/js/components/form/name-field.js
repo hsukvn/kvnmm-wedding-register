@@ -12,8 +12,9 @@ class NameField extends React.Component {
 
 		return (
 			<TextField
-				required
+				id="name"
 				floatingLabelText="姓名"
+				errorText={this.props.error}
 				value={this.props.value}
 				onChange={this.props.onChange}
 				margin="normal"

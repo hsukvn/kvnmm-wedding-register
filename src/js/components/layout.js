@@ -27,13 +27,14 @@ export default class Layout extends React.Component {
 			dialog: false,
 			submit_dialog: false,
 			submit_success: false,
+			error_message: {},
 		}
 	}
 
-	changeState(key, val) {
+	changeState(key, val, callback) {
 		var state = {};
 		state[key] = val;
-		this.setState(state);
+		this.setState(state, callback);
 	}
 
 	render() {
@@ -53,6 +54,7 @@ export default class Layout extends React.Component {
 					dialog={this.state.dialog}
 					submit_dialog={this.state.submit_dialog}
 					submit_success={this.state.submit_success}
+					error_message={this.state.error_message}
 				/>
 			</MuiThemeProvider>
 		);

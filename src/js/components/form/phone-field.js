@@ -12,8 +12,10 @@ class PhoneField extends React.Component {
 
 		return (
 			<TextField
+				id="phone"
 				name="phone"
 				floatingLabelText="電話"
+				errorText={this.props.error}
 				type="tel"
 				value={this.props.value}
 				onChange={this.props.onChange}

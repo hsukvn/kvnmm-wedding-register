@@ -13,8 +13,10 @@ class RelationSelect extends React.Component {
 
 		return (
 			<SelectField
+				id="relation"
 				floatingLabelText="誰的親友"
 				value={this.props.value}
+				errorText={this.props.error}
 				onChange={this.props.onChange}
 				margin="normal"
 				style={{width: '100%'}}

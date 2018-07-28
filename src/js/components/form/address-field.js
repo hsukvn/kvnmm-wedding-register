@@ -14,8 +14,10 @@ class AddressField extends React.Component {
 
 		return (
 			<TextField
+				id="address"
 				onChange={this.props.onChange}
 				value={this.props.value}
+				errorText={this.props.error}
 				name="address"
 				floatingLabelText="地址"
 				style={{width: '100%'}}
