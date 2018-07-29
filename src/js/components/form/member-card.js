@@ -79,10 +79,19 @@ class MemberCard extends React.Component {
 				<CardHeader
 					title="葷素？寶寶椅？攜伴？"
 					subtitle="所有參加成員（含寶寶）都要填寫呦!"
-					style={{'marginBottom': '-50px',
-							'paddingRight': '0px',
-							'textAlign': 'left',
+					style={{
+						'marginBottom': '-50px',
+						'paddingRight': '0px',
+						'fontWeight': 'inherit',
 					}}
+					titleStyle={{
+						'textAlign': 'left',
+						'fontSize': 'inherit',
+					}}
+					subtitleStyle={{
+						'textAlign': 'left',
+					}}
+					subtitleColor="#39454b"
 					className="cardspan"
 	
 				/>
