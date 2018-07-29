@@ -59,7 +59,7 @@ class Form extends React.Component {
 		}
 
 		if (!this.props.relation) {
-			error_message.relation = '誰的好友請選擇!';
+			error_message.relation = '誰的親友請選擇!';
 		}
 
 		if (!this.props.email) {

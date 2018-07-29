@@ -24,6 +24,7 @@ class RelationSelect extends React.Component {
 				floatingLabelFocusStyle={{color: '#00bcd4'}}
 				underlineStyle={{borderColor: '#39454b'}}
 				underlineFocusStyle={{borderColor: '#00bcd4'}}
+				iconStyle={{fill: '#39454b'}}
 			>
 				<MenuItem
 					value={1}

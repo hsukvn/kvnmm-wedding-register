@@ -151,7 +151,7 @@ class MemberCard extends React.Component {
 					))}
 				</CardText>
 				<CardText>
-					由於新郎新娘希望大家都能夠美美的
+					由於新郎新娘希望大家都能夠美美的，
 					請務必穿著正裝出席！
 					（西裝襯衫／淺色禮服洋裝）
 				</CardText>
