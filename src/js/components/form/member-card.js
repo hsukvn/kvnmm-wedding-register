@@ -141,6 +141,11 @@ class MemberCard extends React.Component {
 						</Grid>
 					))}
 				</CardText>
+				<CardText>
+					由於新郎新娘希望大家都能夠美美的
+					請務必穿著正裝出席！
+					（西裝襯衫／淺色禮服洋裝）
+				</CardText>
 			</Card>
 		);
 	}
