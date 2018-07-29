@@ -20,6 +20,10 @@ class PhoneField extends React.Component {
 				value={this.props.value}
 				onChange={this.props.onChange}
 				style={{width: '100%'}}
+				floatingLabelStyle={{color: '#39454b'}}
+				floatingLabelFocusStyle={{color: '#00bcd4'}}
+				underlineStyle={{borderColor: '#39454b'}}
+				underlineFocusStyle={{borderColor: '#00bcd4'}}
 			/>
 		);
 	}

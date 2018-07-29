@@ -17,6 +17,10 @@ class MsgField extends React.Component {
 				onChange={this.props.onChange}
 				value={this.props.value}
 				style={{width: '100%'}}
+				floatingLabelStyle={{color: '#39454b'}}
+				floatingLabelFocusStyle={{color: '#00bcd4'}}
+				underlineStyle={{borderColor: '#39454b'}}
+				underlineFocusStyle={{borderColor: '#00bcd4'}}
 				multiLine={true}
 				rows={1}
 			/>

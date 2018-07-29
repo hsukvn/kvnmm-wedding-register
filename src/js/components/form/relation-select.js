@@ -20,6 +20,10 @@ class RelationSelect extends React.Component {
 				onChange={this.props.onChange}
 				margin="normal"
 				style={{width: '100%'}}
+				floatingLabelStyle={{color: '#39454b'}}
+				floatingLabelFocusStyle={{color: '#00bcd4'}}
+				underlineStyle={{borderColor: '#39454b'}}
+				underlineFocusStyle={{borderColor: '#00bcd4'}}
 			>
 				<MenuItem
 					value={1}

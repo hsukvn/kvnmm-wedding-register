@@ -14,6 +14,7 @@ import {
 import NameField from './name-field';
 
 const styles = theme => ({
+	fontFamily: 'Noto Sans TC',
 });
 
 class MemberCard extends React.Component {
@@ -78,8 +79,12 @@ class MemberCard extends React.Component {
 				<CardHeader
 					title="我要攜伴"
 					subtitle="所有參加的成員包含寶寶都需要填寫呦!"
-					style={{'marginBottom': '-50px', 'paddingRight': '0px'}}
-					textStyle={{'textAlign': 'left'}}
+					style={{'marginBottom': '-50px',
+							'paddingRight': '0px',
+							'textAlign': 'left',
+					}}
+					className="cardspan"
+	
 				/>
 				<CardText>
 					{this.props.members.map((member, idx) => (

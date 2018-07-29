@@ -21,6 +21,10 @@ class AddressField extends React.Component {
 				name="address"
 				floatingLabelText="地址"
 				style={{width: '100%'}}
+				floatingLabelStyle={{color: 'rgba(0, 0, 0, 1)'}}
+				floatingLabelFocusStyle={{color: '#00bcd4'}}
+				underlineStyle={{borderColor: 'rgba(0, 0, 0, 1)'}}
+				underlineFocusStyle={{borderColor: '#00bcd4'}}
 			/>
 		)
 	}
