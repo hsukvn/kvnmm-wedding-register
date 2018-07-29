@@ -77,8 +77,8 @@ class MemberCard extends React.Component {
 		return (
 			<Card style={{'marginTop': '20px', 'background': '#f5f6f7'}}>
 				<CardHeader
-					title="我要攜伴"
-					subtitle="所有參加的成員包含寶寶都需要填寫呦!"
+					title="葷素？寶寶椅？攜伴？"
+					subtitle="所有參加成員（含寶寶）都要填寫呦!"
 					style={{'marginBottom': '-50px',
 							'paddingRight': '0px',
 							'textAlign': 'left',
