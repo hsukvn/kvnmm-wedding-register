@@ -206,6 +206,7 @@ class Form extends React.Component {
 						/>
 						<SubmitDialog
 							changeState={this.props.changeState.bind(this)}
+							attend={this.props.attend}
 							submit_dialog={this.props.submit_dialog}
 							submit_success={this.props.submit_success}
 						/>

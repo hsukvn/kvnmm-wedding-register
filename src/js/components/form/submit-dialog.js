@@ -32,7 +32,9 @@ class SubmitDialog extends React.Component {
 				open = {this.props.submit_dialog}
 			>
 				{this.props.submit_success ?
+					( (this.props.attend === 'coming') ?
 					'我們收到囉！請跟我們一起期待11月24日（六）中午這一天～' :
+					'收到，太可惜惹( ･ั﹏･ั)') :
 					'送出失敗惹！請洽愛名（0912026072）或彥彬（0921998205）由我們手動幫您報名 Q_Q'
 				}
 			</Dialog>
