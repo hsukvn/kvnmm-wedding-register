@@ -1,3 +1,4 @@
+const mongoose = require('mongoose');
 const Attendee = require('../models/attendee');
 
 exports.get = function(req, res, next) {
