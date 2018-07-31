@@ -2,135 +2,28 @@
 
 'use strict';
 
-var express  = require('express');
-var app      = express();
+const http     = require('http');
+const express  = require('express');
+const app      = express();
+const router   = require('./router');
 
-var mongoose = require('mongoose');
-var morgan   = require('morgan');
+const morgan   = require('morgan');
 
-var bodyParser     = require('body-parser');
-var methodOverride = require('method-override'); // for delete method
-
-var AttendeeScema = new mongoose.Schema({
-	name: { type: String, required: true },
-	relation: { type: Number, min: 1, max: 2 },
-	members: [{
-		name: String,
-		vegetarian: Boolean,
-		babychair: Boolean
-	}],
-	attend: { type: Boolean, required: true },
-	paper_invitation: { type: Boolean, required: true },
-	email: String,
-	phone: String,
-	address: String,
-	message: String,
-});
-
-var Attendee = mongoose.model('attendee', AttendeeScema);
-
-mongoose.connect('mongodb://localhost:27017/wedding', { useMongoClient: true });
+const bodyParser     = require('body-parser');
+const methodOverride = require('method-override'); // for delete method
+const cors           = require('cors');
 
 app.use(morgan('dev')); // log every request to the console
+app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(methodOverride());
 
-app.use(function (req, res, next) {
-	res.setHeader('Access-Control-Allow-Origin', '*'); // FIXME: restrict domain
-		res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-		res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
-		res.setHeader('Access-Control-Allow-Credentials', true);
-		next();
+router(app);
+
+const port = process.env.PORT || 8080;
+const server = http.createServer(app);
+
+server.listen(port, function () {
+	console.log('Sever listening on:', port);
 });
-
-app.use('/', express.static(__dirname + '/public'));
-
-app.get('/api/attendee', function(req, res) { // FIXME: only for debug, should not expose it
-	Attendee.find(function(err, attendee) {
-		if (err) {
-			res.status(500).json(err);
-		} else {
-			res.status(200).json(attendee);
-		}
-	});
-});
-
-app.post('/api/attendee', function(req, res) {
-	Attendee.create({ // FIXME: better way to give default value?
-		name: req.body.name,
-		relation: req.body.relation,
-		members: req.body.members ? req.body.members : [],
-		attend: req.body.attend ? req.body.attend : false,
-		paper_invitation: req.body.paper_invitation ? req.body.paper_invitation : false,
-		email: req.body.email ? req.body.email : '',
-		phone: req.body.phone ? req.body.phone : '',
-		address: req.body.address ? req.body.address : '',
-		message: req.body.message ? req.body.message : ''
-	}, function(err, attendee) {
-		if (err) {
-			res.status(500).json(err);
-		} else {
-			res.status(200).json({ status: 'ok' });
-		}
-	});
-});
-
-app.put('/api/attendee/:id', function(req, res) {
-	if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
-		res.status(400).json({error: 'id is invalid'});
-		return;
-	}
-
-	Attendee.findById(req.params.id, function (err, attendee) {
-		if (attendee === null) {
-			res.status(404).json({err: 'id not found'});
-			return;
-		}
-
-		var updateKey = ['name', 'relation', 'members', 'attend', 'paper_invitation', 'email', 'phone', 'address', 'message'];
-		var payload = {};
-
-		updateKey.forEach(function(key) {
-			if (req.body.hasOwnProperty(key)) {
-				payload[key] = req.body[key];
-			}
-		});
-
-		Attendee.findByIdAndUpdate(req.params.id, payload, function(err) {
-			if (err) {
-				res.status(500).json(err);
-			} else {
-				res.status(200).json({ status: 'ok' });
-			}
-		})
-	});
-});
-
-app.delete('/api/attendee/:id', function(req, res) {
-	if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
-		res.status(400).json({error: 'id is invalid'});
-		return;
-	}
-
-	Attendee.count({_id: req.params.id}, function (err, count) {
-		if (count <= 0) {
-			res.status(404).json({err: 'id not found'});
-		} else {
-			Attendee.remove({
-				_id: req.params.id
-			}, function (err, attendee) {
-				if (err) {
-					res.status(500).json(err);
-				} else {
-					res.status(200).json({ status: 'ok' });
-				}
-			});
-		}
-	});
-});
-
-var server = app.listen(8080, function() {
-	console.log("Listening on port %s...", server.address().port);
-});
-
