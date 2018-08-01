@@ -22,7 +22,7 @@ class AttendSelect extends React.Component {
 				>
 					<RadioButton
 						value="coming"
-						label="我要來！"
+						label="11月24日中午我要來！"
 						style={{fontSize: '16px', textAlign: 'left'}}
 					/>
 					<RadioButton
