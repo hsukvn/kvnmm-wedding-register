@@ -91,6 +91,18 @@ class Form extends React.Component {
 		return $.isEmptyObject(error_message);
 	}
 
+	getMembers() {
+		let members = [];
+
+		this.props.members.forEach(function(member, idx) {
+			if (member.name) {
+				members.push(member);
+			}
+		});
+
+		return members;
+	}
+
 	openDialog(e) {
 		if (this.validate()) {
 			this.props.changeState('dialog', true);
@@ -195,7 +207,7 @@ class Form extends React.Component {
 							changeState={this.props.changeState.bind(this)}
 							name={this.props.name}
 							relation={this.props.relation}
-							members={this.props.members}
+							members={this.getMembers()}
 							attend={this.props.attend}
 							invitation={this.props.invitation}
 							email={this.props.email}
