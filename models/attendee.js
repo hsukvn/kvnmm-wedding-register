@@ -9,7 +9,8 @@ const AttendeeScema = new mongoose.Schema({
 	members: [{
 		name: String,
 		vegetarian: Boolean,
-		babychair: Boolean
+		babychair: Boolean,
+		tag: Array,
 	}],
 	attend: { type: Boolean, required: true },
 	paper_invitation: { type: Boolean, required: true },
