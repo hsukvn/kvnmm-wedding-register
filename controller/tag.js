@@ -2,11 +2,11 @@ const mongoose = require('mongoose');
 const Tag = require('../models/tag');
 
 exports.get = function(req, res, next) {
-	Tag.find(function(err, tag) {
+	Tag.find(function(err, tags) {
 		if (err) {
 			res.status(500).json(err);
 		} else {
-			res.status(200).json(tag);
+			res.status(200).json(tags);
 		}
 	});
 };
@@ -27,13 +27,13 @@ exports.update = function(req, res, next) {
 	let id = req.params.id;
 
 	if (!mongoose.Types.ObjectId.isValid(id)) {
-		res.status(400).json({error: 'id is invalid'});
+		res.status(400).json({ error: 'id is invalid' });
 		return;
 	}
 
 	Tag.findById(req.params.id, function (err, tag) {
 		if (tag === null) {
-			res.status(404).json({err: 'tag not found'});
+			res.status(404).json({ error: 'tag not found' });
 			return;
 		}
 
@@ -46,7 +46,8 @@ exports.update = function(req, res, next) {
 			}
 		});
 
-		Tag.findByIdAndUpdate(req.params.id, payload, {new: true}, function(err, tag) {
+		Tag.findByIdAndUpdate(req.params.id, payload, { new: true, runValidators: true }, function(err, tag) {
+
 			if (err) {
 				res.status(500).json(err);
 			} else {
@@ -66,7 +67,7 @@ exports.remove = function(req, res, next) {
 
 	Tag.count({_id: id}, function (err, count) {
 		if (count <= 0) {
-			res.status(404).json({err: 'tag not found'});
+			res.status(404).json({ error: 'tag not found' });
 		} else {
 			Tag.remove({ _id: id }, function (err) {
 				if (err) {
