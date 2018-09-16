@@ -11,6 +11,7 @@ const AttendeeScema = new mongoose.Schema({
 		vegetarian: { type: Boolean, default: false },
 		babychair: { type: Boolean, default: false },
 		tags: { type: Array, default: [] },
+		table: {type: String, default: '' },
 	}],
 	attend: { type: Boolean, default: false },
 	paper_invitation: { type: Boolean, default: false },
