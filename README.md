@@ -108,11 +108,7 @@ curl -H "Content-type: application/json" -H 'Authorization: eyJ0eXAiOiJKV1QiLCJh
 ```
 curl -H "Content-type: application/json" \
 -H 'Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI1YjYwNzhhOGE0N2MyYzE4MTRkMWU5MDgiLCJpYXQiOjE1MzMwNDkwNzc2OTh9.hsaQ3W4VYE99lA8ipE27FB6R1ojqUVT3_dEezKD3-MA' \
--X PUT -d '{ \
-    "tags": ["5b9d0aeb92cf31ce0d8040df"], \
-    "table": "5b9dd3c9b7533f5f4a3256ae" \
-}' \
-localhost:8080/api/attendee/5b607ebe32bbfc9c14f60404
+-X PUT -d '{ "members": [{ "name":"kevin", "_id": "5b9dea529232b1d92b37abc5", "vegetarian": true, "babychair": false, "table": "5b9dd3c9b7533f5f4a3256ae", "tags": ["5b9d0aeb92cf31ce0d8040df"]}]}' localhost:8080/api/attendee/5b607ebe32bbfc9c14f60404
 ```
 
 * DELETE /api/attendee
@@ -180,8 +176,6 @@ localhost:8080/api/tag/5b9d0aeb92cf31ce0d8040df
 curl -H 'Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI1YjYwNzhhOGE0N2MyYzE4MTRkMWU5MDgiLCJpYXQiOjE1MzMwNDkwNzc2OTh9.hsaQ3W4VYE99lA8ipE27FB6R1ojqUVT3_dEezKD3-MA' \
 -X DELETE localhost:8080/api/tag/5b9d0aeb92cf31ce0d8040df
 ```
-
-
 
 ## Develop UI
 `npm run ui-dev`
