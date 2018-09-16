@@ -1,6 +1,7 @@
 const Authentication  = require('./controller/authentication');
 const Attendee        = require('./controller/attendee');
 const Tag             = require('./controller/tag');
+const Table           = require('./controller/table');
 const passport        = require('passport');
 const passportService = require('./services/passport');
 const express         = require('express');
@@ -20,4 +21,8 @@ module.exports = function(app) {
   app.post('/api/tag', requireAuth, Tag.add);
   app.put('/api/tag/:id', requireAuth, Tag.update);
   app.delete('/api/tag/:id', requireAuth, Tag.remove);
+  app.get('/api/table', requireAuth, Table.get);
+  app.post('/api/table', requireAuth, Table.add);
+  app.put('/api/table/:id', requireAuth, Table.update);
+  app.delete('/api/table/:id', requireAuth, Table.remove);
 }
