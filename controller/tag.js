@@ -46,11 +46,11 @@ exports.update = function(req, res, next) {
 			}
 		});
 
-		Tag.findByIdAndUpdate(req.params.id, payload, function(err) {
+		Tag.findByIdAndUpdate(req.params.id, payload, {new: true}, function(err, tag) {
 			if (err) {
 				res.status(500).json(err);
 			} else {
-				res.status(200).json({ status: 'ok' });
+				res.status(200).json(tag);
 			}
 		})
 	});
