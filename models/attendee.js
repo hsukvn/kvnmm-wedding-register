@@ -5,19 +5,19 @@ const con = mongoose.createConnection('mongodb://localhost:27017/wedding', { use
 
 const AttendeeScema = new mongoose.Schema({
 	name: { type: String, required: true },
-	relation: { type: Number, min: 1, max: 2 },
+	relation: { type: Number, min: 1, max: 2, required: true }, // 1: groom 2: bride
 	members: [{
-		name: String,
-		vegetarian: Boolean,
-		babychair: Boolean,
-		tag: Array,
+		name: { type: String, required: true },
+		vegetarian: { type: Boolean, default: false },
+		babychair: { type: Boolean, default: false },
+		tags: { type: Array, default: [] },
 	}],
-	attend: { type: Boolean, required: true },
-	paper_invitation: { type: Boolean, required: true },
-	email: String,
-	phone: String,
-	address: String,
-	message: String,
+	attend: { type: Boolean, default: false },
+	paper_invitation: { type: Boolean, default: false },
+	email: { type: String, default: '' },
+	phone: { type: String, default: '' },
+	address: { type: String, default: '' },
+	message: { type: String, default: '' },
 });
 
 const ModelClass = con.model('attendee', AttendeeScema);

@@ -26,20 +26,20 @@ exports.add = function(req, res, next) {
 		if (err) {
 			res.status(500).json(err);
 		} else {
-			res.status(200).json({ status: 'ok' });
+			res.status(200).json(attendee);
 		}
 	});
 };
 
 exports.update = function(req, res, next) {
 	if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
-		res.status(400).json({error: 'id is invalid'});
+		res.status(400).json({ error: 'id is invalid' });
 		return;
 	}
 
 	Attendee.findById(req.params.id, function (err, attendee) {
 		if (attendee === null) {
-			res.status(404).json({err: 'id not found'});
+			res.status(404).json({ error: 'id not found' });
 			return;
 		}
 
@@ -52,11 +52,11 @@ exports.update = function(req, res, next) {
 			}
 		});
 
-		Attendee.findByIdAndUpdate(req.params.id, payload, function(err) {
+		Attendee.findByIdAndUpdate(req.params.id, payload, { new: true, runValidators: true }, function(err, attendee) {
 			if (err) {
 				res.status(500).json(err);
 			} else {
-				res.status(200).json({ status: 'ok' });
+				res.status(200).json(attendee);
 			}
 		})
 	});
@@ -64,17 +64,17 @@ exports.update = function(req, res, next) {
 
 exports.remove = function(req, res, next) {
 	if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
-		res.status(400).json({error: 'id is invalid'});
+		res.status(400).json({ error: 'id is invalid' });
 		return;
 	}
 
 	Attendee.count({_id: req.params.id}, function (err, count) {
 		if (count <= 0) {
-			res.status(404).json({err: 'id not found'});
+			res.status(404).json({ error: 'id not found' });
 		} else {
 			Attendee.remove({
 				_id: req.params.id
-			}, function (err, attendee) {
+			}, function (err) {
 				if (err) {
 					res.status(500).json(err);
 				} else {
