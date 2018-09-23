@@ -1,18 +1,17 @@
 const mongoose = require('mongoose');
 const Attendee = require('../models/attendee');
 
-exports.get = function(req, res, next) {
-	Attendee.find(function(err, attendee) {
-		if (err) {
+exports.get = async (req, res) => {
+	try {
+		const attendee = await Attendee.find();
+		res.status(200).json(attendee);
+	} catch (err) {
 			res.status(500).json(err);
-		} else {
-			res.status(200).json(attendee);
-		}
-	});
+	}
 };
 
-exports.add = function(req, res, next) {
-	Attendee.create({ // FIXME: better way to give default value?
+exports.add = async (req, res) => {
+	const payload = {
 		name: req.body.name,
 		relation: req.body.relation,
 		members: req.body.members ? req.body.members : [],
@@ -21,66 +20,74 @@ exports.add = function(req, res, next) {
 		email: req.body.email ? req.body.email : '',
 		phone: req.body.phone ? req.body.phone : '',
 		address: req.body.address ? req.body.address : '',
-		message: req.body.message ? req.body.message : ''
-	}, function(err, attendee) {
-		if (err) {
-			res.status(500).json(err);
-		} else {
-			res.status(200).json(attendee);
-		}
-	});
+		message: req.body.message ? req.body.message : '',
+	};
+
+	try {
+		const attendee = await Attendee.create(payload);
+		res.status(200).json(attendee);
+	} catch (err) {
+		res.status(500).json(err);
+	}
 };
 
-exports.update = function(req, res, next) {
+exports.update = async (req, res) => {
 	if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
 		res.status(400).json({ error: 'id is invalid' });
 		return;
 	}
 
-	Attendee.findById(req.params.id, function (err, attendee) {
-		if (attendee === null) {
+	try {
+		const attendee = await Attendee.findById(req.params.id);
+
+		if (!attendee) {
 			res.status(404).json({ error: 'id not found' });
 			return;
 		}
+	} catch (err) {
+		res.status(500).json(err);
+		return;
+	}
 
-		var updateKey = ['name', 'relation', 'members', 'attend', 'paper_invitation', 'email', 'phone', 'address', 'message'];
-		var payload = {};
+	const updateKey = ['name', 'relation', 'members', 'attend', 'paper_invitation', 'email', 'phone', 'address', 'message'];
+	let payload = {};
 
-		updateKey.forEach(function(key) {
-			if (req.body.hasOwnProperty(key)) {
-				payload[key] = req.body[key];
-			}
-		});
-
-		Attendee.findByIdAndUpdate(req.params.id, payload, { new: true, runValidators: true }, function(err, attendee) {
-			if (err) {
-				res.status(500).json(err);
-			} else {
-				res.status(200).json(attendee);
-			}
-		})
+	updateKey.forEach(function(key) {
+		if (req.body.hasOwnProperty(key)) {
+			payload[key] = req.body[key];
+		}
 	});
+
+	try {
+		const attendee = await Attendee.findByIdAndUpdate(req.params.id, payload, { new: true, runValidators: true });
+		res.status(200).json(attendee);
+	} catch (err) {
+		res.status(500).json(err);
+	}
 };
 
-exports.remove = function(req, res, next) {
+exports.remove = async (req, res) => {
 	if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
 		res.status(400).json({ error: 'id is invalid' });
 		return;
 	}
 
-	Attendee.count({_id: req.params.id}, function (err, count) {
+	try {
+		const count = await Attendee.count({_id: req.params.id});
+
 		if (count <= 0) {
-			res.status(404).json({ error: 'id not found' });
-		} else {
-			Attendee.remove({
-				_id: req.params.id
-			}, function (err) {
-				if (err) {
-					res.status(500).json(err);
-				} else {
-					res.status(200).json({ status: 'ok' });
-				}
-			});
+			res.status(200).json({ status: 'ok' }); // skip when id is not exist
+			return;
 		}
-	});
+	} catch (err) {
+		res.status(500).json(err);
+		return;
+	}
+
+	try {
+		await Attendee.remove({ _id: req.params.id });
+		res.status(200).json({ status: 'ok' });
+	} catch (err) {
+		res.status(500).json(err);
+	}
 };
