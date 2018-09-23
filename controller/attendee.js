@@ -3,8 +3,8 @@ const Attendee = require('../models/attendee');
 
 exports.get = async (req, res) => {
 	try {
-		const attendee = await Attendee.find();
-		res.status(200).json(attendee);
+		const attendees = await Attendee.find();
+		res.status(200).json(attendees);
 	} catch (err) {
 			res.status(500).json(err);
 	}
@@ -32,13 +32,15 @@ exports.add = async (req, res) => {
 };
 
 exports.update = async (req, res) => {
-	if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+	const id = req.params.id;
+
+	if (!mongoose.Types.ObjectId.isValid(id)) {
 		res.status(400).json({ error: 'id is invalid' });
 		return;
 	}
 
 	try {
-		const attendee = await Attendee.findById(req.params.id);
+		const attendee = await Attendee.findById(id);
 
 		if (!attendee) {
 			res.status(404).json({ error: 'id not found' });
@@ -59,7 +61,7 @@ exports.update = async (req, res) => {
 	});
 
 	try {
-		const attendee = await Attendee.findByIdAndUpdate(req.params.id, payload, { new: true, runValidators: true });
+		const attendee = await Attendee.findByIdAndUpdate(id, payload, { new: true, runValidators: true });
 		res.status(200).json(attendee);
 	} catch (err) {
 		res.status(500).json(err);
@@ -67,13 +69,15 @@ exports.update = async (req, res) => {
 };
 
 exports.remove = async (req, res) => {
-	if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+	const id = req.params.id;
+
+	if (!mongoose.Types.ObjectId.isValid(id)) {
 		res.status(400).json({ error: 'id is invalid' });
 		return;
 	}
 
 	try {
-		const count = await Attendee.count({_id: req.params.id});
+		const count = await Attendee.count({_id: id});
 
 		if (count <= 0) {
 			res.status(200).json({ status: 'ok' }); // skip when id is not exist
@@ -85,7 +89,7 @@ exports.remove = async (req, res) => {
 	}
 
 	try {
-		await Attendee.remove({ _id: req.params.id });
+		await Attendee.remove({ _id: id });
 		res.status(200).json({ status: 'ok' });
 	} catch (err) {
 		res.status(500).json(err);

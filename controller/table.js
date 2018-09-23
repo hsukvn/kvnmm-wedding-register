@@ -1,81 +1,89 @@
 const mongoose = require('mongoose');
 const Table = require('../models/table');
 
-exports.get = function(req, res, next) {
-	Table.find(function(err, tables) {
-		if (err) {
+exports.get = async (req, res) => {
+	try {
+		const tables = await Table.find();
+		res.status(200).json(tables);
+	} catch (err) {
 			res.status(500).json(err);
-		} else {
-			res.status(200).json(tables);
-		}
-	});
+	}
 };
 
-exports.add = function(req, res, next) {
-	Table.create({
+exports.add = async (req, res) => {
+	const payload = {
 		name: req.body.name,
 		position: req.body.position
-	}, function(err, table) {
-		if (err) {
-			res.status(500).json(err);
-		} else {
-			res.status(200).json(table);
-		}
-	});
+	}
+
+	try {
+		const table = await Table.create(payload);
+		res.status(200).json(table);
+	} catch (err) {
+		res.status(500).json(err);
+	}
 };
 
-exports.update = function(req, res, next) {
-	let id = req.params.id;
+exports.update = async (req, res) => {
+	const id = req.params.id;
 
 	if (!mongoose.Types.ObjectId.isValid(id)) {
 		res.status(400).json({error: 'id is invalid'});
 		return;
 	}
 
-	Table.findById(req.params.id, function (err, table) {
-		if (table === null) {
+	try {
+		const table = await Table.findById(id);
+
+		if (!table) {
 			res.status(404).json({ error: 'table not found' });
 			return;
 		}
+	} catch (err) {
+		res.status(500).json(err);
+		return;
+	}
 
-		var updateKey = ['name', 'position'];
-		var payload = {};
+	const updateKey = ['name', 'position'];
+	let payload = {};
 
-		updateKey.forEach(function(key) {
-			if (req.body.hasOwnProperty(key)) {
-				payload[key] = req.body[key];
-			}
-		});
-
-		Table.findByIdAndUpdate(req.params.id, payload, { new: true, runValidators: true }, function(err, table) {
-			if (err) {
-				res.status(500).json(err);
-			} else {
-				res.status(200).json(table);
-			}
-		})
+	updateKey.forEach(function(key) {
+		if (req.body.hasOwnProperty(key)) {
+			payload[key] = req.body[key];
+		}
 	});
+
+	try {
+		const table = await Table.findByIdAndUpdate(id, payload, { new: true, runValidators: true });
+		res.status(200).json(table);
+	} catch (err) {
+		res.status(500).json(err);
+	}
 };
 
-exports.remove = function(req, res, next) {
-	let id = req.params.id;
+exports.remove = async (req, res) => {
+	const id = req.params.id;
 
 	if (!mongoose.Types.ObjectId.isValid(id)) {
 		res.status(400).json({ error: 'id is invalid' });
 		return;
 	}
 
-	Table.count({_id: id}, function (err, count) {
+	try {
+		const count = await Table.count({ _id: id });
 		if (count <= 0) {
-			res.status(404).json({ error: 'table not found' });
-		} else {
-			Table.remove({ _id: id }, function (err) {
-				if (err) {
-					res.status(500).json(err);
-				} else {
-					res.status(200).json({ status: 'ok' });
-				}
-			});
+			res.status(200).json({ status: 'ok' }); // skip when id is not exist
+			return;
 		}
-	});
+	} catch (err) {
+		res.status(500).json(err);
+		return;
+	}
+
+	try {
+		await Table.remove({ _id: id });
+		res.status(200).json({ status: 'ok' });
+	} catch (err) {
+		res.status(500).json(err);
+	}
 };
