@@ -1,81 +1,89 @@
 const mongoose = require('mongoose');
 const Tag = require('../models/tag');
 
-exports.get = function(req, res, next) {
-	Tag.find(function(err, tags) {
-		if (err) {
-			res.status(500).json(err);
-		} else {
-			res.status(200).json(tags);
-		}
-	});
+exports.get = async (req, res) => {
+	try {
+		tags = await Tag.find();
+		res.status(200).json(tags);
+	} catch (err) {
+		res.status(500).json(err);
+	}
 };
 
-exports.add = function(req, res, next) {
-	Tag.create({
+exports.add = async (req, res) => {
+	const payload = {
 		name: req.body.name
-	}, function(err, tag) {
-		if (err) {
-			res.status(500).json(err);
-		} else {
-			res.status(200).json(tag);
-		}
-	});
+	}
+
+	try {
+		const tag = await Tag.create(payload);
+		res.status(200).json(tag);
+	} catch (err) {
+		res.status(500).json(err);
+	}
 };
 
-exports.update = function(req, res, next) {
-	let id = req.params.id;
+exports.update = async (req, res) => {
+	const id = req.params.id;
 
 	if (!mongoose.Types.ObjectId.isValid(id)) {
 		res.status(400).json({ error: 'id is invalid' });
 		return;
 	}
 
-	Tag.findById(req.params.id, function (err, tag) {
-		if (tag === null) {
+	try {
+		const tag = await Tag.findById(id);
+
+		if (!tag) {
 			res.status(404).json({ error: 'tag not found' });
 			return;
 		}
+	} catch (err) {
+		res.status(500).json(err);
+		return;
+	}
 
-		var updateKey = ['name'];
-		var payload = {};
+	const updateKey = ['name'];
+	let payload = {};
 
-		updateKey.forEach(function(key) {
-			if (req.body.hasOwnProperty(key)) {
-				payload[key] = req.body[key];
-			}
-		});
-
-		Tag.findByIdAndUpdate(req.params.id, payload, { new: true, runValidators: true }, function(err, tag) {
-
-			if (err) {
-				res.status(500).json(err);
-			} else {
-				res.status(200).json(tag);
-			}
-		})
+	updateKey.forEach(function(key) {
+		if (req.body.hasOwnProperty(key)) {
+			payload[key] = req.body[key];
+		}
 	});
+
+	try {
+		const tag = await Tag.findByIdAndUpdate(id, payload, { new: true, runValidators: true });
+		res.status(200).json(tag);
+	} catch (err) {
+		res.status(500).json(err);
+	}
 };
 
-exports.remove = function(req, res, next) {
-	let id = req.params.id;
+exports.remove = async (req, res) => {
+	const id = req.params.id;
 
 	if (!mongoose.Types.ObjectId.isValid(id)) {
 		res.status(400).json({error: 'id is invalid'});
 		return;
 	}
 
-	Tag.count({_id: id}, function (err, count) {
+	try {
+		const count = await Tag.count({ _id: id });
+
 		if (count <= 0) {
-			res.status(404).json({ error: 'tag not found' });
-		} else {
-			Tag.remove({ _id: id }, function (err) {
-				if (err) {
-					res.status(500).json(err);
-				} else {
-					res.status(200).json({ status: 'ok' });
-				}
-			});
+			res.status(200).json({ status: 'ok' }); // skip when id is not exist
+			return;
 		}
-	});
+	} catch (err) {
+		res.status(500).json(err);
+		return;
+	}
+
+	try {
+		await Tag.remove({ _id: id });
+		res.status(200).json({ status: 'ok' });
+	} catch (err) {
+		res.status(500).json(err);
+	}
 };
