@@ -30,7 +30,7 @@ class VerifyDialog extends React.Component {
 		this.changeState('submitting', true);
 		// call api
 		$.ajax({
-			url: '/api/attendee',
+			url: '/api/registrant',
 			dataType: 'json',
 			type: 'POST',
 			data: {

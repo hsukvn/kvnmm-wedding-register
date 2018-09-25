@@ -1,33 +1,67 @@
 const mongoose = require('mongoose');
+const Registrant = require('../models/registrant');
 const Attendee = require('../models/attendee');
 
 exports.get = async (req, res) => {
 	try {
 		const attendees = await Attendee.find();
-		res.status(200).json(attendees);
+		const attendeesResp = [];
+
+		for (const attendee of attendees) {
+			try {
+				const registrant = await Registrant.findOne({
+					members: { $in: [ mongoose.Types.ObjectId(attendee._id) ] }
+				})
+				if (!registrant) {
+					continue;
+				}
+				attendeesResp.push({ ...attendee._doc, ...{ owner: { name: registrant.name, _id: registrant._id }, relation: registrant.relation }});
+			} catch (err) {
+				// FIXME: error handling
+				console.log(err);
+			}
+		}
+		res.status(200).json(attendeesResp);
 	} catch (err) {
 			res.status(500).json(err);
 	}
 };
 
-exports.add = async (req, res) => {
-	const payload = {
-		name: req.body.name,
-		relation: req.body.relation,
-		members: req.body.members ? req.body.members : [],
-		attend: req.body.attend ? req.body.attend : false,
-		paper_invitation: req.body.paper_invitation ? req.body.paper_invitation : false,
-		email: req.body.email ? req.body.email : '',
-		phone: req.body.phone ? req.body.phone : '',
-		address: req.body.address ? req.body.address : '',
-		message: req.body.message ? req.body.message : '',
-	};
+exports.getById = async (req, res) => {
+	const id = req.params.id;
 
+	if (!mongoose.Types.ObjectId.isValid(id)) {
+		res.status(400).json({ error: 'id is invalid' });
+		return;
+	}
+
+	let attendeeResp = {};
 	try {
-		const attendee = await Attendee.create(payload);
-		res.status(200).json(attendee);
+		const attendee = await Attendee.findById(id);
+
+		if (!attendee) {
+			res.status(404).json({ error: 'id not found' });
+			return;
+		}
+
+		try {
+			const registrant = await Registrant.findOne({
+				members: { $in: [ mongoose.Types.ObjectId(attendee._id) ] }
+			})
+			if (!registrant) {
+				res.status(400).json({ error: 'attendee does not have owner' });
+				return;
+			}
+			attendeeResp = { ...attendee._doc, ...{ owner: { name: registrant.name, _id: registrant._id }, relation: registrant.relation }};
+		} catch (err) {
+			// FIXME: error handling
+			console.log(err);
+		}
+
+		res.status(200).json(attendeeResp);
 	} catch (err) {
 		res.status(500).json(err);
+		return;
 	}
 };
 
@@ -39,8 +73,9 @@ exports.update = async (req, res) => {
 		return;
 	}
 
+	let attendee = {};
 	try {
-		const attendee = await Attendee.findById(id);
+		attendee = await Attendee.findById(id);
 
 		if (!attendee) {
 			res.status(404).json({ error: 'id not found' });
@@ -51,7 +86,21 @@ exports.update = async (req, res) => {
 		return;
 	}
 
-	const updateKey = ['name', 'relation', 'members', 'attend', 'paper_invitation', 'email', 'phone', 'address', 'message'];
+	let registrant = {};
+	try {
+		registrant = await Registrant.findOne({
+			members: { $in: [ mongoose.Types.ObjectId(attendee._id) ] }
+		})
+		if (!registrant) {
+			res.status(400).json({ error: 'attendee does not have owner' });
+			return;
+		}
+	} catch (err) {
+		res.status(500).json(err);
+		return;
+	}
+
+	const updateKey = ['name', 'vegetarian', 'babychair', 'tags', 'table'];
 	let payload = {};
 
 	updateKey.forEach(function(key) {
@@ -61,37 +110,14 @@ exports.update = async (req, res) => {
 	});
 
 	try {
-		const attendee = await Attendee.findByIdAndUpdate(id, payload, { new: true, runValidators: true });
-		res.status(200).json(attendee);
+		const attendeeUpdate = await Attendee.findByIdAndUpdate(id, payload, { new: true, runValidators: true });
+		const attendeeResp = { ...attendeeUpdate._doc, ...{ owner: { name: registrant.name, _id: registrant._id }, relation: registrant.relation }};
+		res.status(200).json(attendeeResp);
 	} catch (err) {
 		res.status(500).json(err);
 	}
 };
 
 exports.remove = async (req, res) => {
-	const id = req.params.id;
-
-	if (!mongoose.Types.ObjectId.isValid(id)) {
-		res.status(400).json({ error: 'id is invalid' });
-		return;
-	}
-
-	try {
-		const count = await Attendee.count({_id: id});
-
-		if (count <= 0) {
-			res.status(200).json({ status: 'ok' }); // skip when id is not exist
-			return;
-		}
-	} catch (err) {
-		res.status(500).json(err);
-		return;
-	}
-
-	try {
-		await Attendee.remove({ _id: id });
-		res.status(200).json({ status: 'ok' });
-	} catch (err) {
-		res.status(500).json(err);
-	}
+	res.status(200).json({ status: 'ok' });
 };

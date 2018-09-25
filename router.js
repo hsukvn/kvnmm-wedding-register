@@ -1,4 +1,5 @@
 const Authentication  = require('./controller/authentication');
+const Registrant      = require('./controller/registrant');
 const Attendee        = require('./controller/attendee');
 const Tag             = require('./controller/tag');
 const Table           = require('./controller/table');
@@ -13,8 +14,13 @@ module.exports = function(app) {
   app.use('/', express.static(__dirname + '/public'));
   app.post('/api/signin', requireSignin, Authentication.signin);
   app.post('/api/signup', Authentication.signup);
+  app.get('/api/registrant', requireAuth, Registrant.get);
+  app.get('/api/registrant/:id', requireAuth, Registrant.getById);
+  app.post('/api/registrant', Registrant.add);
+  app.put('/api/registrant/:id', requireAuth, Registrant.update);
+  app.delete('/api/registrant/:id', requireAuth, Registrant.remove);
   app.get('/api/attendee', requireAuth, Attendee.get);
-  app.post('/api/attendee', Attendee.add);
+  app.get('/api/attendee/:id', requireAuth, Attendee.getById);
   app.put('/api/attendee/:id', requireAuth, Attendee.update);
   app.delete('/api/attendee/:id', requireAuth, Attendee.remove);
   app.get('/api/tag', requireAuth, Tag.get);
